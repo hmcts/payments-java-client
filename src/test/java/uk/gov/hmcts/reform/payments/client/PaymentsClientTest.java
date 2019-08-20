@@ -1,33 +1,48 @@
 package uk.gov.hmcts.reform.payments.client;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.cloud.contract.wiremock.AutoConfigureWireMock;
+import org.springframework.stereotype.Service;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import uk.gov.hmcts.reform.authorisation.ServiceAuthorisationApi;
 import uk.gov.hmcts.reform.authorisation.generators.AuthTokenGenerator;
 import uk.gov.hmcts.reform.payments.client.models.Fee;
 import uk.gov.hmcts.reform.payments.client.models.Payment;
 
 import java.math.BigDecimal;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest(classes = {
-        PaymentsClient.class,
         PaymentsApi.class,
-        PaymentsClientTest.ServiceTestSupportAuthTokenGenerator.class
+        PaymentsClient.class,
+        PaymentsClientTest.ServiceTestSupportAuthTokenGenerator.class,
+        PaymentsClientTest.StubServiceAuthorisationImpl.class
 })
 @ExtendWith(SpringExtension.class)
 @EnableAutoConfiguration
 @AutoConfigureWireMock(port = 8091)
 class PaymentsClientTest {
     @Autowired
+    private ServiceTestSupportAuthTokenGenerator authTokenGenerator;
+
+    @Autowired
+    private PaymentsApi paymentsApi;
+
     private PaymentsClient paymentsClient;
+
+    @BeforeEach
+    void setupClient() {
+        this.paymentsClient = new PaymentsClient(paymentsApi, authTokenGenerator);
+    }
 
     @Test
     void testCreatePayment() {
@@ -69,10 +84,30 @@ class PaymentsClientTest {
         );
     }
 
-    public static class ServiceTestSupportAuthTokenGenerator implements AuthTokenGenerator {
+    @Service
+    static class ServiceTestSupportAuthTokenGenerator implements AuthTokenGenerator {
         @Override
         public String generate() {
             return "let me in";
+        }
+    }
+
+    @Service
+    static class StubServiceAuthorisationImpl implements ServiceAuthorisationApi {
+
+        @Override
+        public String serviceToken(Map<String, String> signIn) {
+            return null;
+        }
+
+        @Override
+        public void authorise(String authHeader, String[] roles) {
+
+        }
+
+        @Override
+        public String getServiceName(String authHeader) {
+            return null;
         }
     }
 }
