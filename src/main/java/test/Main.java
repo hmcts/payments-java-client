@@ -30,6 +30,7 @@ public class Main {
         if (args.length == 0) {
             System.err.println("Usage: java -jar payments-java-client.jar {sessionId}");
             System.err.println("\tsessionId:\tLog in to an IdAM service and extract the SESSION_ID cookie");
+            System.exit(1);
         }
         PaymentsApi api = createFeignClient();
         PaymentsClient client = new PaymentsClient(api, Main::generateServiceToken);
