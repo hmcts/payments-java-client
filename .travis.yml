@@ -1,6 +1,29 @@
 language: java
 jdk:
-- openjdk8
+  - openjdk8
+before_cache:
+- rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+- rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+cache:
+  directories:
+  - "$HOME/.gradle/caches/"
+  - "$HOME/.gradle/wrapper/"
+deploy:
+- provider: script
+  script: "./gradlew bintrayUpload"
+  skip_cleanup: true
+  on:
+    repo: hmcts/payments-java-client
+    tags: true
+- provider: releases
+  api_key:
+    secure: TQPdJBxE2kJzHk5P9VN4R2VxnSutSV+jWeMzVkn8++IKc5dw3gJ8PP1dmWk5nGESiB/trtp+SAivq07Pn6J1d7LGWNOXR6IbnZNXu6MLXxNOmt4MeFbgkPkQdcXpFbwbxlX3p86eeDO7oNFBzG1ujGiBu2NkB9LFjg1aFUfl0VxLmgKu3+jservLF55wPPdg9B783uU3x5Qg3asFEHDdb6f77jKoXShIDpP0Pg84m5JsPKpPedLYqF4nghbehIlhJdLPZtmdp2svXr2wYY2oyT7TsnccNgBK0e72VNaQ8YwGHR7psQQ7ZVzWye72e579JpbK8KZZ68ximLGH5B6qvWeup3xPbaa/L0fX+OqlxOWHEGDIx2s3d+Fy2KhpiaDGxqs04wInHMVaQ9Q9TCrzbvuBmyWPr13Bnr0kJ2kRVFrsTiJwmOc/UJkPW/sOYO/0cQoAgP9r9NEiMAH9EimNWFxfM6S4/+Uv09TOqxwm/CkSxhK+hNmhHp/Po0CsL+PbQPSG6QcynZlxRoSKLGHPK2xb5eHj2BMFVS8A8NJXXIcX5R+Umvt+iG+807Mgd4WZP2XSmUllLiT7v2JrwDOSk/QPgYLc3zQYMGnY0s8zmj3buvE+g7VV6XQxvyiYs9+9EGo+bnn+tReWKS75w7CB+rQNnt7jwE7Jy5R1s0D5ifE=
+  file: build/libs/payments-client-*.jar
+  file_glob: true
+  skip_cleanup: true
+  on:
+    repo: hmcts/payments-java-client
+    tags: true
 env:
   global:
   - secure: cvA9O8BRbdqMBSQIIe5BSJBMnuuw1n4Fv7qDFEjE4m/6Gf6kOvenPLKTPbikEDRf0XR9vL70rxmXryNmtxAZVpeDNb0+R75hePBKhiBfGwrkPJY3qnQw62r+9Fdq4A8Dp9vASD4lYeXhW4dCfgafFbKU14em8kaua4mOQLxMQA3m35+a7Pb4vCAsPBHvUJc916rOHTrRwt/y2sPlHTvr9k+p6TzoKh8MHZQIdOS5QaoyGefik3876pe7za22LhyybW5Ix8DTaQJdyiLvnfECSzGYgFKcVu/I/YgaxKDxU6qVQ3LDJTvxZni4OnKttIn/+TG69airHXf/e71nmPafphX3CVqzNMaHAogjL4o64iB+0yWfcl8ZsZn/e8+z2OFce0JKO8ziB7KCa0R3ukCTqtnXF4ru77V8X7MENLRg2YOlNfyoDe+GLjhDYWfs0Otr7QbR1xm4ntE4zxLfqetv5XqGOlSnQac0WJ9uFwIva/3pCOXEW60FYusVs/JSm9T8KviZg3K+LMxF/K+3caOHOWLbqzCTHu10AV0cncuk+u5U1//5ul0GNAqmWL+uNd3mnb6XIWhthPoihzg9p/qyVr9fqdQ+uxqcHgxuzbFcxSi1Ei6n5r4DuZNMuJQT/iV7+PZLau5zozzJu2xlke6ONKdwzFKvvX+ldaAuxFYnmtw=
