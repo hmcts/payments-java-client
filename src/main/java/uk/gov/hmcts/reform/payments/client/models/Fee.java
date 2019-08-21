@@ -18,7 +18,7 @@ public class Fee {
     private BigDecimal calculatedAmount;
     private String code;
     private String version;
-    private int id;
-    private int volume;
+    private Integer id;
+    private Integer volume;
     private String ccdCaseNumber;
 }

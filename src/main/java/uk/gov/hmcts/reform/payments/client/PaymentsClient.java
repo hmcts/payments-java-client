@@ -19,8 +19,8 @@ public class PaymentsClient {
     public Payment createPayment(String authorisation, PaymentRequest paymentRequest, String redirectUrl) {
         String serviceAuth = authTokenGenerator.generate();
         return paymentsApi.create(
-                "Bearer " + authorisation,
-                "Bearer " + serviceAuth,
+                authorisation,
+                serviceAuth,
                 redirectUrl,
                 paymentRequest
         );
@@ -29,8 +29,8 @@ public class PaymentsClient {
     public Payment retrievePayment(String authorisation, String paymentReference) {
         return paymentsApi.retrieve(
                 paymentReference,
-                "Bearer " + authorisation,
-                "Bearer " + authTokenGenerator.generate()
+                authorisation,
+                authTokenGenerator.generate()
         );
     }
 }
