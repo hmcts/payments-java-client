@@ -1,6 +1,7 @@
 package uk.gov.hmcts.reform.payments.client.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.AllArgsConstructor;
@@ -35,4 +36,6 @@ public class Payment {
     private String status;
     private String paymentGroupReference;
     private BigDecimal amount;
+    @JsonProperty("_links") // snake case strategy is meant to handle this, but doesn't.
+    private NavigationLinks links;
 }
