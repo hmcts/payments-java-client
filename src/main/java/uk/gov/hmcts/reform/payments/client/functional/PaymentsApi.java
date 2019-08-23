@@ -1,4 +1,4 @@
-package uk.gov.hmcts.reform.payments.client;
+package uk.gov.hmcts.reform.payments.client.functional;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
-import uk.gov.hmcts.reform.payments.client.models.Payment;
+import uk.gov.hmcts.reform.payments.client.functional.models.Payment;
 
 @FeignClient(name = "payments-api", url = "${payments.api.url}")
 public interface PaymentsApi {

@@ -1,4 +1,4 @@
-package uk.gov.hmcts.reform.payments.client.models;
+package uk.gov.hmcts.reform.payments.client.functional.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;

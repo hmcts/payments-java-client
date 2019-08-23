@@ -6,11 +6,11 @@ import feign.jackson.JacksonEncoder;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.cloud.openfeign.support.SpringMvcContract;
-import uk.gov.hmcts.reform.payments.client.PaymentRequest;
-import uk.gov.hmcts.reform.payments.client.PaymentsApi;
-import uk.gov.hmcts.reform.payments.client.PaymentsClient;
-import uk.gov.hmcts.reform.payments.client.models.Fee;
-import uk.gov.hmcts.reform.payments.client.models.Payment;
+import uk.gov.hmcts.reform.payments.client.functional.PaymentRequest;
+import uk.gov.hmcts.reform.payments.client.functional.PaymentsApi;
+import uk.gov.hmcts.reform.payments.client.functional.PaymentsClient;
+import uk.gov.hmcts.reform.payments.client.functional.models.Fee;
+import uk.gov.hmcts.reform.payments.client.functional.models.Payment;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;

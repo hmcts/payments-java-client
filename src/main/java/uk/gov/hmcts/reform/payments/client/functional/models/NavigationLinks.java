@@ -1,4 +1,4 @@
-package uk.gov.hmcts.reform.payments.client.models;
+package uk.gov.hmcts.reform.payments.client.functional.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
@@ -8,9 +8,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.springframework.web.bind.annotation.RequestMethod;
-
-import java.net.URI;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -19,7 +16,7 @@ import java.net.URI;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class NavigationLink {
-    private URI href;
-    private RequestMethod method;
+public class NavigationLinks {
+    private NavigationLink nextUrl;
+    private NavigationLink self;
 }

@@ -1,4 +1,4 @@
-package uk.gov.hmcts.reform.payments.client.models;
+package uk.gov.hmcts.reform.payments.client.functional.models;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;

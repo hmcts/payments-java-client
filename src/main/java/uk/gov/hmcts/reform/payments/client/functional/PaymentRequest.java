@@ -1,10 +1,10 @@
-package uk.gov.hmcts.reform.payments.client;
+package uk.gov.hmcts.reform.payments.client.functional;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Builder;
 import lombok.Data;
-import uk.gov.hmcts.reform.payments.client.models.Fee;
+import uk.gov.hmcts.reform.payments.client.functional.models.Fee;
 
 import java.math.BigDecimal;
 

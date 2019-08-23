@@ -1,9 +1,9 @@
-package uk.gov.hmcts.reform.payments.client;
+package uk.gov.hmcts.reform.payments.client.functional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import uk.gov.hmcts.reform.authorisation.generators.AuthTokenGenerator;
-import uk.gov.hmcts.reform.payments.client.models.Payment;
+import uk.gov.hmcts.reform.payments.client.functional.models.Payment;
 
 @Service
 public class PaymentsClient {

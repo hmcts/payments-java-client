@@ -1,4 +1,4 @@
-package uk.gov.hmcts.reform.payments.client;
+package uk.gov.hmcts.reform.payments.client.functional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,8 +12,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.web.bind.annotation.RequestMethod;
 import uk.gov.hmcts.reform.authorisation.ServiceAuthorisationApi;
 import uk.gov.hmcts.reform.authorisation.generators.AuthTokenGenerator;
-import uk.gov.hmcts.reform.payments.client.models.Fee;
-import uk.gov.hmcts.reform.payments.client.models.Payment;
+import uk.gov.hmcts.reform.payments.client.functional.models.Fee;
+import uk.gov.hmcts.reform.payments.client.functional.models.Payment;
 
 import java.math.BigDecimal;
 import java.util.Map;
