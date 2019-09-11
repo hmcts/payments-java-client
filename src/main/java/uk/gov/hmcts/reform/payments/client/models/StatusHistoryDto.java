@@ -1,4 +1,4 @@
-package uk.gov.hmcts.reform.payments.client.functional.models;
+package uk.gov.hmcts.reform.payments.client.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
@@ -8,9 +8,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.net.URI;
+import java.time.OffsetDateTime;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -19,7 +18,11 @@ import java.net.URI;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class NavigationLink {
-    private URI href;
-    private RequestMethod method;
+public class StatusHistoryDto {
+    private OffsetDateTime dateCreated;
+    private OffsetDateTime dateUpdated;
+    private String errorCode;
+    private String errorMessage;
+    private String externalStatus;
+    private String status;
 }

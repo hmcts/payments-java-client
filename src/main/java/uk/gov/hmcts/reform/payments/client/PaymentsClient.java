@@ -1,9 +1,9 @@
-package uk.gov.hmcts.reform.payments.client.functional;
+package uk.gov.hmcts.reform.payments.client;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import uk.gov.hmcts.reform.authorisation.generators.AuthTokenGenerator;
-import uk.gov.hmcts.reform.payments.client.functional.models.Payment;
+import uk.gov.hmcts.reform.payments.client.models.PaymentDto;
 
 @Service
 public class PaymentsClient {
@@ -16,17 +16,16 @@ public class PaymentsClient {
         this.authTokenGenerator = authTokenGenerator;
     }
 
-    public Payment createPayment(String authorisation, PaymentRequest paymentRequest, String redirectUrl) {
-        String serviceAuth = authTokenGenerator.generate();
+    public PaymentDto createPayment(String authorisation, CardPaymentRequest paymentRequest, String redirectUrl) {
         return paymentsApi.create(
                 authorisation,
-                serviceAuth,
+                authTokenGenerator.generate(),
                 redirectUrl,
                 paymentRequest
         );
     }
 
-    public Payment retrievePayment(String authorisation, String paymentReference) {
+    public PaymentDto retrievePayment(String authorisation, String paymentReference) {
         return paymentsApi.retrieve(
                 paymentReference,
                 authorisation,

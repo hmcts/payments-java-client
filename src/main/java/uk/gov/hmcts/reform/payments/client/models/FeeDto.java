@@ -1,4 +1,4 @@
-package uk.gov.hmcts.reform.payments.client.functional.models;
+package uk.gov.hmcts.reform.payments.client.models;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -14,11 +14,18 @@ import java.math.BigDecimal;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Fee {
+public class FeeDto {
     private BigDecimal calculatedAmount;
-    private String code;
-    private String version;
-    private Integer id;
-    private Integer volume;
     private String ccdCaseNumber;
+    private String code;
+    private String description;
+    private Integer id;
+    private String jurisdiction1;
+    private String jurisdiction2;
+    private String memoLine;
+    private String naturalAccountCode;
+    private BigDecimal netAmount;
+    private String reference;
+    private String version;
+    private Integer volume;
 }

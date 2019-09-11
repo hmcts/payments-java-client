@@ -1,4 +1,4 @@
-package uk.gov.hmcts.reform.payments.client.functional.config;
+package uk.gov.hmcts.reform.payments.client.config;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.cloud.openfeign.EnableFeignClients;

@@ -1,4 +1,4 @@
-package uk.gov.hmcts.reform.payments.client.functional;
+package uk.gov.hmcts.reform.payments.client;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,8 +12,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.web.bind.annotation.RequestMethod;
 import uk.gov.hmcts.reform.authorisation.ServiceAuthorisationApi;
 import uk.gov.hmcts.reform.authorisation.generators.AuthTokenGenerator;
-import uk.gov.hmcts.reform.payments.client.functional.models.Fee;
-import uk.gov.hmcts.reform.payments.client.functional.models.Payment;
+import uk.gov.hmcts.reform.payments.client.models.FeeDto;
+import uk.gov.hmcts.reform.payments.client.models.PaymentDto;
 
 import java.math.BigDecimal;
 import java.util.Map;
@@ -47,15 +47,15 @@ class PaymentsClientTest {
 
     @Test
     void testCreatePayment() {
-        Payment payment = paymentsClient.createPayment(
+        PaymentDto payment = paymentsClient.createPayment(
                 "Authorisation",
-                PaymentRequest.builder()
+                CardPaymentRequest.builder()
                         .amount(BigDecimal.TEN)
                         .caseReference("e1880a05-740e-4a71-a82a-4931cc09f790")
                         .ccdCaseNumber("UNKNOWN")
                         .currency("GBP")
                         .description("description")
-                        .fees(new Fee[0])
+                        .fees(new FeeDto[0])
                         .service("my service")
                         .siteId("AA00")
                         .build(),
@@ -81,7 +81,7 @@ class PaymentsClientTest {
 
     @Test
     void testRetrievePayment() {
-        Payment payment = paymentsClient.retrievePayment("Authorisation", "RC-1566-2093-5462-0545");
+        PaymentDto payment = paymentsClient.retrievePayment("Authorisation", "RC-1566-2093-5462-0545");
         assertNotNull(payment);
         assertAll(
             () -> assertEquals("RC-1566-2093-5462-0545", payment.getReference()),

@@ -6,11 +6,11 @@ import feign.jackson.JacksonEncoder;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.cloud.openfeign.support.SpringMvcContract;
-import uk.gov.hmcts.reform.payments.client.functional.PaymentRequest;
-import uk.gov.hmcts.reform.payments.client.functional.PaymentsApi;
-import uk.gov.hmcts.reform.payments.client.functional.PaymentsClient;
-import uk.gov.hmcts.reform.payments.client.functional.models.Fee;
-import uk.gov.hmcts.reform.payments.client.functional.models.Payment;
+import uk.gov.hmcts.reform.payments.client.CardPaymentRequest;
+import uk.gov.hmcts.reform.payments.client.PaymentsApi;
+import uk.gov.hmcts.reform.payments.client.PaymentsClient;
+import uk.gov.hmcts.reform.payments.client.models.FeeDto;
+import uk.gov.hmcts.reform.payments.client.models.PaymentDto;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
@@ -37,16 +37,16 @@ public class Main {
 
         System.out.println("Create Payment");
         System.out.println("--------------");
-        Payment createdPayment = client.createPayment(
+        PaymentDto createdPayment = client.createPayment(
                 args[0],
-                PaymentRequest.builder()
+                CardPaymentRequest.builder()
                         .caseReference(UUID.randomUUID().toString())
                         .ccdCaseNumber("UNKNOWN")
                         .description("Money Claims fees")
                         .service("CMC")
                         .currency("GBP")
                         .siteId("AA00")
-                        .fees(new Fee[0])
+                        .fees(new FeeDto[0])
                         .amount(BigDecimal.TEN)
                         .build(),
                 "http://localhost"
@@ -57,7 +57,7 @@ public class Main {
 
         System.out.println("Retrieve Payment");
         System.out.println("----------------");
-        Payment retrievedPayment = client.retrievePayment(args[0], createdPayment.getReference());
+        PaymentDto retrievedPayment = client.retrievePayment(args[0], createdPayment.getReference());
         System.out.println(retrievedPayment);
     }
 
