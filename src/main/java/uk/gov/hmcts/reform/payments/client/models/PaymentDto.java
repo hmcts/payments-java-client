@@ -8,7 +8,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
@@ -16,7 +15,6 @@ import java.time.OffsetDateTime;
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-@ToString
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -28,6 +26,7 @@ public class PaymentDto {
     private String caseReference;
     private String ccdCaseNumber;
     private String channel;
+    @Builder.Default
     private String currency = "GBP";
     private String customerReference;
     private OffsetDateTime dateCreated;
