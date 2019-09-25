@@ -30,7 +30,7 @@ def springBootVersion = '2.1.6.RELEASE'
 
 checkstyle {
     maxWarnings = 0
-    toolVersion = '8.22'
+    toolVersion = '8.24'
 }
 
 sourceCompatibility = 1.8
