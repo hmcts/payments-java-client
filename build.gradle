@@ -107,7 +107,6 @@ bintray {
 def versions = [
         logback          : '1.2.3',
         springBoot       : springBootVersion,
-        springfoxSwagger : '2.9.2',
         reformJavaLogging: '5.0.1',
         junitJupiter     : '5.5.1'
 ]
@@ -153,9 +152,6 @@ dependencies {
 
     compileOnly group: 'org.projectlombok', name: 'lombok', version: lombokVersion
     annotationProcessor group: 'org.projectlombok', name: 'lombok', version: lombokVersion
-
-    compile group: 'io.springfox', name: 'springfox-swagger2', version: versions.springfoxSwagger
-    compile group: 'io.springfox', name: 'springfox-swagger-ui', version: versions.springfoxSwagger
 
     compile group: 'ch.qos.logback', name: 'logback-classic', version: versions.logback
     compile group: 'ch.qos.logback', name: 'logback-core', version: versions.logback
