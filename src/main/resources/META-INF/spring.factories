@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  uk.gov.hmcts.reform.payments.client.config.PaymentClientAutoConfiguration,\
+  uk.gov.hmcts.reform.payments.client.PaymentsClient

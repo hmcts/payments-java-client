@@ -1,0 +1,24 @@
+{
+  "id" : "f4db6fd2-dea4-4a3a-80df-643b2cf1344d",
+  "name" : "card-payments_rc-1566-2093-5462-0545",
+  "request" : {
+    "url" : "/card-payments/RC-1566-2093-5462-0545",
+    "method" : "GET"
+  },
+  "response" : {
+    "status" : 200,
+    "body" : "{\"amount\":10,\"description\":\"description\",\"reference\":\"RC-1566-2093-5462-0545\",\"currency\":\"GBP\",\"ccd_case_number\":\"UNKNOWN\",\"case_reference\":\"4a8eb06a-66b6-4c62-acc9-250132b48a5a\",\"channel\":\"online\",\"method\":\"card\",\"external_provider\":\"gov pay\",\"status\":\"Initiated\",\"external_reference\":\"n2bvsq7ufhtde2n34i362fee4c\",\"site_id\":\"AA00\",\"service_name\":\"my service\",\"payment_group_reference\":\"2019-15662093545\",\"fees\":[],\"_links\":{\"self\":{\"href\":\"http://localhost:4421/card-payments/RC-1566-2093-5462-0545\",\"method\":\"GET\"}}}",
+    "headers" : {
+      "X-Content-Type-Options" : "nosniff",
+      "X-XSS-Protection" : "1; mode=block",
+      "Cache-Control" : "no-cache, no-store, max-age=0, must-revalidate",
+      "Pragma" : "no-cache",
+      "Expires" : "0",
+      "X-Frame-Options" : "DENY",
+      "Content-Type" : "application/json;charset=UTF-8",
+      "Date" : "Mon, 19 Aug 2019 10:09:15 GMT"
+    }
+  },
+  "uuid" : "f4db6fd2-dea4-4a3a-80df-643b2cf1344d",
+  "persistent" : true
+}

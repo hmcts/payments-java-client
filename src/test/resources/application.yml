@@ -1,0 +1,9 @@
+---
+payments:
+  api:
+    url: 'http://localhost:${wiremock.server.port}'
+
+idam:
+  s2s-auth:
+    totp_secret: 'AAAAAAAA'
+    microservice: 'microservice'

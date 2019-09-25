@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: 'Payments service client'
+
+idam:
+  admin:
+    username: 'idamowner@hmcts.net'
+    password: 'Ref0rmIsFun'
+  s2s-auth:
+    totp_secret: 'AAAAAAAAAAAAAAA'
+    microservice: 'cmc'
+    url: 'http://localhost:4552'
+  test-api:
+    url: 'http://localhost:8081'
+  client:
+    redirect_uri: 'http://localhost:3451/oauth2redirect'
+    id: 'pay_client'
+    secret: 'OOOOOOOOOOOOOOOO'
+
+payments:
+  api:
+    url: 'http://localhost:4421'
+
+feign:
+  httpclient:
+    enabled: true
+  client:
+    config:
+      default:
+        loggerLevel: 'full'
