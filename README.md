@@ -26,11 +26,11 @@ class PaymentsService {
         this.paymentsClient = paymentsClient;
     }
     
-    public Payment createPayment(String authorisation, PaymentRequest paymentRequest, String redirect) {
+    public PaymentDTO createPayment(String authorisation, PaymentRequest paymentRequest, String redirect) {
         return paymentsClient.createPayment(authorisation, paymentRequest, redirect);
     }
 
-    public Payment retrievePayment(String authorisation, String paymentReference) {
+    public PaymentDTO retrievePayment(String authorisation, String paymentReference) {
         return paymentsClient.retrievePayment(authorisation, paymentReference);
     }
 }
