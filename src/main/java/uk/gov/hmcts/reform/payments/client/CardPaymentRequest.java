@@ -22,6 +22,7 @@ public class CardPaymentRequest {
     private String caseReference;
     private String ccdCaseNumber;
     private String channel;
+    @Builder.Default
     private String currency = "GBP";
     private String description;
     private FeeDto[] fees;
