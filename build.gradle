@@ -10,8 +10,11 @@ plugins {
     id 'net.ltgt.apt' version '0.21'
 }
 
+// This will pick up the version number from release tag
+def buildNumber = System.getenv("RELEASE_VERSION")?.replace("refs/tags/", "") ?: "DEV-SNAPSHOT"
+
 group 'uk.gov.hmcts.reform'
-version '0.0.1'
+version buildNumber
 
 dependencyUpdates.resolutionStrategy = {
     componentSelection { rules ->
@@ -85,23 +88,6 @@ ext {
     lombokVersion = '1.18.8'
     springCloudVersion = 'Greenwich.SR2'
     feignVersion = '10.3.0'
-}
-
-bintray {
-    user = System.getenv('BINTRAY_USER')
-    key = System.getenv('BINTRAY_KEY')
-    publications = ['Main']
-    publish = true
-    pkg {
-        repo = 'hmcts-maven'
-        name = 'payments-client'
-        userOrg = 'hmcts'
-        licenses = ['MIT']
-        vcsUrl = gitRepo
-        version {
-            name = project.version
-        }
-    }
 }
 
 def versions = [
@@ -199,13 +185,34 @@ publishing {
 
             pom.withXml {
                 def root = asNode()
-                root.appendNode('description', 'Payments client')
+                root.appendNode('description', 'Client library for communicating with payments api')
                 root.appendNode('name', 'Payments client')
                 root.appendNode('url', gitRepo)
                 root.children().last() + pomConfig
             }
         }
     }
+}
+
+bintray {
+    user = System.getenv('BINTRAY_USER')
+    key = System.getenv('BINTRAY_KEY')
+    publications = ['Main']
+    publish = true
+    pkg {
+        repo = 'hmcts-maven'
+        name = 'payments-client'
+        userOrg = 'hmcts'
+        licenses = ['MIT']
+        vcsUrl = gitRepo
+        version {
+            name = project.version
+        }
+    }
+}
+
+wrapper {
+    distributionType = Wrapper.DistributionType.ALL
 }
 
 bootJar {
