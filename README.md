@@ -1,6 +1,5 @@
 # Payments java client
 
-[![Build Status](https://travis-ci.com/hmcts/payments-java-client.svg?branch=master)](https://travis-ci.com/hmcts/payments-java-client)
 [ ![Download](https://api.bintray.com/packages/hmcts/hmcts-maven/payments-client/images/download.svg) ](https://bintray.com/hmcts/hmcts-maven/payments-client/_latestVersion)
 
 This is a client library for interacting with the Payments application.
