@@ -1,11 +1,13 @@
 package uk.gov.hmcts.reform.payments.client;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 import uk.gov.hmcts.reform.authorisation.generators.AuthTokenGenerator;
 import uk.gov.hmcts.reform.payments.client.models.PaymentDto;
 
 @Service
+@ConditionalOnProperty(prefix = "payments", name = "api.url")
 public class PaymentsClient {
     private PaymentsApi paymentsApi;
     private AuthTokenGenerator authTokenGenerator;

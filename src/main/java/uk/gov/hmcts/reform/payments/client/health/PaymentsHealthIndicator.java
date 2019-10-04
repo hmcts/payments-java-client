@@ -1,46 +1,28 @@
 package uk.gov.hmcts.reform.payments.client.health;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.actuate.health.Health;
 import org.springframework.boot.actuate.health.HealthIndicator;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
+import uk.gov.hmcts.reform.payments.client.PaymentsApi;
 
-import java.util.Collections;
-
-@Component
 public class PaymentsHealthIndicator implements HealthIndicator {
-    private String healthEndpoint;
 
-    @Autowired
-    public PaymentsHealthIndicator(@Value("${payments.api.url}") String paymentsDomain) {
-        healthEndpoint = paymentsDomain + "/health/liveness";
+    private static final Logger LOGGER = LoggerFactory.getLogger(PaymentsHealthIndicator.class);
+
+    private final PaymentsApi paymentsApi;
+
+    public PaymentsHealthIndicator(final PaymentsApi paymentsApi) {
+        this.paymentsApi = paymentsApi;
     }
 
     @Override
     public Health health() {
         try {
-            HttpHeaders httpHeaders = new HttpHeaders();
-            httpHeaders.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON_UTF8));
-
-            HttpEntity<?> entity = new HttpEntity<Object>("", httpHeaders);
-
-            ResponseEntity<InternalHealth> exchange = new RestTemplate().exchange(
-                    healthEndpoint,
-                    HttpMethod.GET,
-                    entity,
-                    InternalHealth.class);
-
-            InternalHealth body = exchange.getBody();
-
-            return new Health.Builder(body.getStatus()).build();
+            InternalHealth internalHealth = this.paymentsApi.health();
+            return new Health.Builder(internalHealth.getStatus()).build();
         } catch (Exception ex) {
+            LOGGER.error("Error on payments client healthcheck", ex);
             return Health.down(ex).build();
         }
     }

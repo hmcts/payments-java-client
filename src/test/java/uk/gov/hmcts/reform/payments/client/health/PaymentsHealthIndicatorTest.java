@@ -24,7 +24,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest(classes = {
-        PaymentsHealthIndicator.class,
         PaymentClientAutoConfiguration.class,
         PaymentsHealthIndicatorTest.StubAuthTokenGenerator.class
 })
@@ -37,7 +36,7 @@ class PaymentsHealthIndicatorTest {
 
     @Test
     void testHealthCheckUp() {
-        stubFor(get(urlEqualTo("/health/liveness"))
+        stubFor(get(urlEqualTo("/health"))
                 .willReturn(aResponse()
                         .withHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                         .withBody("{\"status\":\"UP\"}")));
@@ -49,7 +48,7 @@ class PaymentsHealthIndicatorTest {
 
     @Test
     void testHealthCheckDown() {
-        stubFor(get(urlEqualTo("/health/liveness"))
+        stubFor(get(urlEqualTo("/health"))
                 .willReturn(aResponse()
                         .withHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                         .withBody("{\"status\":\"DOWN\"}")));
@@ -61,7 +60,7 @@ class PaymentsHealthIndicatorTest {
 
     @Test
     void testFailedHealthCheck() {
-        stubFor(get(urlEqualTo("/health/liveness"))
+        stubFor(get(urlEqualTo("/health"))
                 .willReturn(aResponse().withStatus(HttpStatus.BAD_REQUEST.value())));
 
         Health health = healthIndicator.health();
