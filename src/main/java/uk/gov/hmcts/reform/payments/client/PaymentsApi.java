@@ -6,10 +6,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
+import uk.gov.hmcts.reform.payments.client.health.InternalHealth;
 import uk.gov.hmcts.reform.payments.client.models.PaymentDto;
 
 @FeignClient(name = "payments-api", url = "${payments.api.url}")
 public interface PaymentsApi {
+    @GetMapping("/health")
+    InternalHealth health();
+
     @PostMapping(value = "/card-payments", consumes = "application/json")
     PaymentDto create(
             @RequestHeader("Authorization") String authorization,
