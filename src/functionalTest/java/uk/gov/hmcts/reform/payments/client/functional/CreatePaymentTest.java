@@ -46,9 +46,20 @@ class CreatePaymentTest extends BaseTest {
     private static final String SITE_ID = "AA00";
 
     @Test
-    void canCreateAndRetrievePayments() {
+    void canCreateRetrieveAndCancelPayments() {
         User citizen = createCitizen();
-        PaymentDto createdPayment = paymentsClient.createPayment(
+        PaymentDto createdPayment = createPayment(citizen);
+
+        final String paymentGroupReference = createdPayment.getPaymentGroupReference();
+        final String reference = createdPayment.getReference();
+
+        retrievePayment(citizen, createdPayment, paymentGroupReference, reference);
+
+        paymentsClient.cancelPayment(citizen.getAuthToken(), reference);
+    }
+
+    private PaymentDto createPayment(User citizen) {
+        PaymentDto payment = paymentsClient.createPayment(
                 citizen.getAuthToken(),
                 CardPaymentRequest.builder()
                         .caseReference(UUID.randomUUID().toString())
@@ -79,59 +90,64 @@ class CreatePaymentTest extends BaseTest {
                 "https://www.google.com"
         );
 
-        assertNotNull(createdPayment);
-        final String paymentGroupReference = createdPayment.getPaymentGroupReference();
-        final String reference = createdPayment.getReference();
-
+        assertNotNull(payment);
         assertAll("created payment",
             () -> assertAll("links",
-                () -> assertNotNull(createdPayment.getLinks()),
-                () -> assertNotNull(createdPayment.getLinks().getNextUrl()),
-                () -> assertNotNull(createdPayment.getLinks().getNextUrl().getHref()),
-                () -> assertEquals(RequestMethod.GET, createdPayment.getLinks().getNextUrl().getMethod()),
-                () -> assertNull(createdPayment.getLinks().getSelf()),
-                () -> assertNull(createdPayment.getLinks().getCancel())
+                () -> assertNotNull(payment.getLinks()),
+                () -> assertNotNull(payment.getLinks().getNextUrl()),
+                () -> assertNotNull(payment.getLinks().getNextUrl().getHref()),
+                () -> assertEquals(RequestMethod.GET, payment.getLinks().getNextUrl().getMethod()),
+                () -> assertNull(payment.getLinks().getSelf()),
+                () -> assertNull(payment.getLinks().getCancel())
             ),
             () -> assertAll("expected to be null",
-                () -> assertNull(createdPayment.getAccountNumber()),
-                () -> assertNull(createdPayment.getAmount()),
-                () -> assertNull(createdPayment.getCaseReference()),
-                () -> assertNull(createdPayment.getCcdCaseNumber()),
-                () -> assertNull(createdPayment.getChannel()),
-                () -> assertNull(createdPayment.getCustomerReference()),
-                () -> assertNull(createdPayment.getDateUpdated()),
-                () -> assertNull(createdPayment.getDescription()),
-                () -> assertNull(createdPayment.getExternalProvider()),
-                () -> assertNull(createdPayment.getFees()),
-                () -> assertNull(createdPayment.getGiroSlipNo()),
-                () -> assertNull(createdPayment.getId()),
-                () -> assertNull(createdPayment.getMethod()),
-                () -> assertNull(createdPayment.getOrganisationName()),
-                () -> assertNull(createdPayment.getPaymentReference()),
-                () -> assertNull(createdPayment.getReportedDateOffline()),
-                () -> assertNull(createdPayment.getServiceName()),
-                () -> assertNull(createdPayment.getSiteId()),
-                () -> assertNull(createdPayment.getStatusHistories())
+                () -> assertNull(payment.getAccountNumber()),
+                () -> assertNull(payment.getAmount()),
+                () -> assertNull(payment.getCaseReference()),
+                () -> assertNull(payment.getCcdCaseNumber()),
+                () -> assertNull(payment.getChannel()),
+                () -> assertNull(payment.getCustomerReference()),
+                () -> assertNull(payment.getDateUpdated()),
+                () -> assertNull(payment.getDescription()),
+                () -> assertNull(payment.getExternalProvider()),
+                () -> assertNull(payment.getFees()),
+                () -> assertNull(payment.getGiroSlipNo()),
+                () -> assertNull(payment.getId()),
+                () -> assertNull(payment.getMethod()),
+                () -> assertNull(payment.getOrganisationName()),
+                () -> assertNull(payment.getPaymentReference()),
+                () -> assertNull(payment.getReportedDateOffline()),
+                () -> assertNull(payment.getServiceName()),
+                () -> assertNull(payment.getSiteId()),
+                () -> assertNull(payment.getStatusHistories())
             ),
             () -> assertAll("expected known values",
-                () -> assertEquals(CURRENCY, createdPayment.getCurrency()),
-                () -> assertEquals(INITIATED_STATUS, createdPayment.getStatus())
+                () -> assertEquals(CURRENCY, payment.getCurrency()),
+                () -> assertEquals(INITIATED_STATUS, payment.getStatus())
             ),
             () -> assertAll("expected unknown values",
-                () -> assertNotNull(createdPayment.getDateCreated()),
-                () -> assertNotNull(createdPayment.getExternalReference())
+                () -> assertNotNull(payment.getDateCreated()),
+                () -> assertNotNull(payment.getExternalReference())
             ),
             () -> assertAll("expected matching values",
-                () -> assertNotNull(paymentGroupReference),
-                () -> assertNotNull(reference)
+                () -> assertNotNull(payment.getPaymentGroupReference()),
+                () -> assertNotNull(payment.getReference())
             )
         );
 
-        PaymentDto retrievedPayment = paymentsClient.retrievePayment(
-                citizen.getAuthToken(),
-                createdPayment.getReference()
-        );
+        return payment;
+    }
 
+    private void retrievePayment(
+            User citizen,
+            PaymentDto createdPayment,
+            String paymentGroupReference,
+            String reference
+    ) {
+        PaymentDto retrievedPayment = paymentsClient.retrievePayment(
+            citizen.getAuthToken(),
+            createdPayment.getReference()
+        );
         assertNotNull(retrievedPayment);
 
         assertAll("retrieved payment",

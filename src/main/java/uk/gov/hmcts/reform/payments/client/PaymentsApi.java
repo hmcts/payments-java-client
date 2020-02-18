@@ -28,4 +28,11 @@ public interface PaymentsApi {
             @RequestHeader("Authorization") String authorization,
             @RequestHeader("ServiceAuthorization") String serviceAuthorization
     );
+
+    @PostMapping(value = "/card-payments/{paymentReference}/cancel")
+    void cancel(
+            @PathVariable("paymentReference") String paymentReference,
+            @RequestHeader("Authorization") String authorization,
+            @RequestHeader("ServiceAuthorization") String serviceAuthorization
+    );
 }

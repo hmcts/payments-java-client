@@ -102,6 +102,12 @@ class PaymentsClientWiremockTest {
         );
     }
 
+    @Test
+    void testCancelPayment() {
+        // test passes if no exceptions are thrown
+        paymentsClient.cancelPayment("Authorisation", "RC-7238-3245-0193-7732");
+    }
+
     @Service
     static class ServiceTestSupportAuthTokenGenerator implements AuthTokenGenerator {
         @Override
