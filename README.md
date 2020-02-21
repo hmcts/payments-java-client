@@ -32,6 +32,10 @@ class PaymentsService {
     public PaymentDTO retrievePayment(String authorisation, String paymentReference) {
         return paymentsClient.retrievePayment(authorisation, paymentReference);
     }
+
+    public void cancelPayment(String authorisation, String paymentReference) {
+        paymentsClient.cancelPayment(authorisation, paymentReference);
+    }
 }
 
 ```

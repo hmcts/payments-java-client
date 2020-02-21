@@ -34,4 +34,12 @@ public class PaymentsClient {
                 authTokenGenerator.generate()
         );
     }
+
+    public void cancelPayment(String authorisation, String paymentReference) {
+        paymentsApi.cancel(
+                paymentReference,
+                authorisation,
+                authTokenGenerator.generate()
+        );
+    }
 }

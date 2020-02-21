@@ -5,11 +5,15 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.client.HttpClientErrorException;
 import uk.gov.hmcts.reform.authorisation.generators.AuthTokenGenerator;
 
 import java.math.BigDecimal;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -56,6 +60,13 @@ class PaymentsClientTest {
     }
 
     @Test
+    void cancelPaymentShouldInvokePaymentsApi() {
+        client.cancelPayment("authorisation", "payment reference");
+
+        verify(paymentsApi).cancel("payment reference", "authorisation", "auth token");
+    }
+
+    @Test
     void createPaymentShouldPropagateExceptions() {
         when(authTokenGenerator.generate())
                 .thenThrow(new RuntimeException("expected exception for create payment"));
@@ -73,5 +84,15 @@ class PaymentsClientTest {
         assertThatThrownBy(() -> client.retrievePayment("authorisation", "payment reference"))
                 .isInstanceOf(RuntimeException.class)
                 .hasMessage("expected exception for retrieve payment");
+    }
+
+    @Test
+    void cancelPaymentShouldPropagateExceptions() {
+        doThrow(new HttpClientErrorException(HttpStatus.NOT_FOUND, "Payment Not found"))
+                .when(paymentsApi).cancel(anyString(), anyString(), anyString());
+
+        assertThatThrownBy(() -> client.cancelPayment("authorisation", "payment reference"))
+                .isInstanceOf(HttpClientErrorException.class)
+                .hasMessage("404 Payment Not found");
     }
 }
