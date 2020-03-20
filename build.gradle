@@ -33,7 +33,9 @@ def springBootVersion = '2.2.5.RELEASE'
 
 checkstyle {
     maxWarnings = 0
-    toolVersion = '8.24'
+    toolVersion = '8.29'
+    // need to set configDir to rootDir otherwise submodule will use submodule/config/checkstyle
+    configDir = new File(rootDir, 'config/checkstyle')
 }
 
 sourceCompatibility = 1.8
@@ -94,7 +96,7 @@ def versions = [
         logback          : '1.2.3',
         springBoot       : springBootVersion,
         reformJavaLogging: '5.0.1',
-        junitJupiter     : '5.5.1'
+        junitJupiter     : '5.5.2'
 ]
 
 dependencyManagement {
@@ -154,7 +156,7 @@ dependencies {
     testImplementation group: 'com.github.tomakehurst', name: 'wiremock', version: '2.24.1'
     testImplementation group: 'org.springframework.cloud', name: 'spring-cloud-contract-wiremock'
 
-    functionalTestImplementation group: 'uk.gov.hmcts.reform', name: 'service-auth-provider-client', version: '2.0.1'
+    functionalTestImplementation group: 'uk.gov.hmcts.reform', name: 'service-auth-provider-client', version: '3.1.1'
     functionalTestCompileOnly group: 'org.projectlombok', name: 'lombok', version: lombokVersion
     functionalTestAnnotationProcessor group: 'org.projectlombok', name: 'lombok', version: lombokVersion
 }
