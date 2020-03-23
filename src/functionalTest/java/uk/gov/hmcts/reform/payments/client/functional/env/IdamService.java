@@ -18,22 +18,22 @@ public class IdamService {
     private String[] allowedRoles;
 
     /**
-     * The description of the service
+     * The description of the service.
      */
     private String description;
 
     /**
-     * Short Identifier for the Service
+     * Short Identifier for the Service.
      */
     private String label;
 
     /**
-     * The Oauth2 Client Id
+     * The Oauth2 Client Id.
      */
     private String oauth2ClientId;
 
     /**
-     * The Oauth2 Client secret
+     * The Oauth2 Client secret.
      */
     private String oauth2ClientSecret;
 
@@ -42,7 +42,7 @@ public class IdamService {
     private String oauth2Scope;
 
     /**
-     * The endpoint used to notify the service about users on-boarding
+     * The endpoint used to notify the service about users on-boarding.
      */
     private String onboardingEndpoint;
 
