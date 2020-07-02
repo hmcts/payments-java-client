@@ -20,21 +20,25 @@ A client (PaymentsClient) is provided for interacting with the PaymentsApi feign
 @Service
 class PaymentsService {
     private final PaymentsClient paymentsClient;
-    
+
     PaymentsService(PaymentsClient paymentsClient) {
         this.paymentsClient = paymentsClient;
     }
-    
-    public PaymentDTO createPayment(String authorisation, PaymentRequest paymentRequest, String redirect) {
-        return paymentsClient.createPayment(authorisation, paymentRequest, redirect);
+
+    public PaymentDTO createCreditAccountPayment(String authorisation, CreditAccountPaymentRequest paymentRequest) {
+        return paymentsClient.createCreditAccountPayment(authorisation, paymentRequest);
     }
 
-    public PaymentDTO retrievePayment(String authorisation, String paymentReference) {
-        return paymentsClient.retrievePayment(authorisation, paymentReference);
+    public PaymentDTO createCardPayment(String authorisation, CardPaymentRequest paymentRequest, String redirect) {
+        return paymentsClient.createCardPayment(authorisation, paymentRequest, redirect);
     }
 
-    public void cancelPayment(String authorisation, String paymentReference) {
-        paymentsClient.cancelPayment(authorisation, paymentReference);
+    public PaymentDTO retrieveCardPayment(String authorisation, String paymentReference) {
+        return paymentsClient.retrieveCardPayment(authorisation, paymentReference);
+    }
+
+    public void cancelCardPayment(String authorisation, String paymentReference) {
+        paymentsClient.cancelCardPayment(authorisation, paymentReference);
     }
 }
 
