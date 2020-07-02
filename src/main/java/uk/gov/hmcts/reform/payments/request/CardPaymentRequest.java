@@ -1,4 +1,4 @@
-package uk.gov.hmcts.reform.payments.client;
+package uk.gov.hmcts.reform.payments.client.request;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
@@ -27,7 +27,7 @@ public class CardPaymentRequest {
     private String description;
     private FeeDto[] fees;
     private String provider;
-    // at the time of writing, permitted services are CMC, DIVORCE, PROBATE, FINREM and DIGITAL_BAR
+    // at the time of writing, permitted services are FPL, CMC, DIVORCE, PROBATE, FINREM and DIGITAL_BAR
     private String service;
     private String siteId;
 }

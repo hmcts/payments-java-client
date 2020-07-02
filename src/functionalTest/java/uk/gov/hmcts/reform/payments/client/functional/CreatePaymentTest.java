@@ -4,9 +4,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.web.bind.annotation.RequestMethod;
-import uk.gov.hmcts.reform.payments.client.CardPaymentRequest;
 import uk.gov.hmcts.reform.payments.client.models.FeeDto;
 import uk.gov.hmcts.reform.payments.client.models.PaymentDto;
+import uk.gov.hmcts.reform.payments.client.request.CardPaymentRequest;
 
 import java.math.BigDecimal;
 import java.util.UUID;
@@ -76,7 +76,7 @@ class CreatePaymentTest extends BaseTest {
     @Test
     void canCreateRetrieveAndCancelPayments() {
         User citizen = createCitizen();
-        PaymentDto createdPayment = paymentsClient.createPayment(
+        PaymentDto createdPayment = paymentsClient.createCardPayment(
             citizen.getAuthToken(),
             CARD_PAYMENT_REQUEST,
             "https://www.google.com"
@@ -86,15 +86,15 @@ class CreatePaymentTest extends BaseTest {
         final String paymentGroupReference = createdPayment.getPaymentGroupReference();
         final String reference = createdPayment.getReference();
 
-        PaymentDto retrievedPayment = paymentsClient.retrievePayment(
+        PaymentDto retrievedPayment = paymentsClient.retrieveCardPayment(
             citizen.getAuthToken(),
             reference
         );
         verifyRetrievedPayment(retrievedPayment, paymentGroupReference, reference);
 
-        paymentsClient.cancelPayment(citizen.getAuthToken(), reference);
+        paymentsClient.cancelCardPayment(citizen.getAuthToken(), reference);
 
-        PaymentDto cancelledPayment = paymentsClient.retrievePayment(
+        PaymentDto cancelledPayment = paymentsClient.retrieveCardPayment(
             citizen.getAuthToken(),
             reference
         );
