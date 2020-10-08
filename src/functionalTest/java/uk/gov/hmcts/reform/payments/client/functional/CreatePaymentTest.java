@@ -79,6 +79,7 @@ class CreatePaymentTest extends BaseTest {
         PaymentDto createdPayment = paymentsClient.createCardPayment(
             citizen.getAuthToken(),
             CARD_PAYMENT_REQUEST,
+            "https://www.google.com",
             "https://www.google.com"
         );
         verifyCreatedPayment(createdPayment);

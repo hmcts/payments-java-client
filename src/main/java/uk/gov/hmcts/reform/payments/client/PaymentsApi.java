@@ -28,6 +28,7 @@ public interface PaymentsApi {
             @RequestHeader("Authorization") String authorization,
             @RequestHeader("ServiceAuthorization") String serviceAuthorization,
             @RequestHeader("return-url") String redirectUrl,
+            @RequestHeader("service-callback-url") String serviceCallbackUrl,
             @RequestBody CardPaymentRequest paymentRequest
     );
 

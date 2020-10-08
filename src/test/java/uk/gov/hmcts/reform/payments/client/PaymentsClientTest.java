@@ -69,9 +69,10 @@ class PaymentsClientTest {
 
     @Test
     void createCardPaymentShouldInvokePaymentsApi() {
-        client.createCardPayment("authorisation", CARD_PAYMENT_REQUEST, "redirect");
+        client.createCardPayment("authorisation", CARD_PAYMENT_REQUEST, "redirect", "serviceCallBackUrl");
 
-        verify(paymentsApi).createCardPayment("authorisation", "auth token", "redirect", CARD_PAYMENT_REQUEST);
+        verify(paymentsApi).createCardPayment("authorisation",
+                "auth token", "redirect", "serviceCallBackUrl", CARD_PAYMENT_REQUEST);
     }
 
     @Test
@@ -93,7 +94,8 @@ class PaymentsClientTest {
         when(authTokenGenerator.generate())
                 .thenThrow(new RuntimeException("expected exception for create payment"));
 
-        assertThatThrownBy(() -> client.createCardPayment("authorisation", CARD_PAYMENT_REQUEST, "redirect"))
+        assertThatThrownBy(() -> client.createCardPayment("authorisation", CARD_PAYMENT_REQUEST,
+                "redirect", "serviceCallBackUrl"))
                 .isInstanceOf(RuntimeException.class)
                 .hasMessage("expected exception for create payment");
     }

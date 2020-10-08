@@ -28,11 +28,13 @@ public class PaymentsClient {
         );
     }
 
-    public PaymentDto createCardPayment(String authorisation, CardPaymentRequest paymentRequest, String redirectUrl) {
+    public PaymentDto createCardPayment(String authorisation, CardPaymentRequest paymentRequest,
+                                        String redirectUrl, String serviceCallbackUrl) {
         return paymentsApi.createCardPayment(
                 authorisation,
                 authTokenGenerator.generate(),
                 redirectUrl,
+                serviceCallbackUrl,
                 paymentRequest
         );
     }
