@@ -99,6 +99,7 @@ class PaymentsClientWiremockTest {
                         .service("my service")
                         .siteId("AA00")
                         .build(),
+                "http://localhost",
                 "http://localhost"
         );
         assertNotNull(payment);
