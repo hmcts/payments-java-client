@@ -7,7 +7,7 @@
   },
   "response" : {
     "status" : 200,
-    "body" : "{\"amount\":10,\"description\":\"description\",\"reference\":\"RC-1566-2093-5462-0545\",\"currency\":\"GBP\",\"ccd_case_number\":\"UNKNOWN\",\"case_reference\":\"4a8eb06a-66b6-4c62-acc9-250132b48a5a\",\"channel\":\"online\",\"method\":\"card\",\"external_provider\":\"gov pay\",\"status\":\"Initiated\",\"external_reference\":\"n2bvsq7ufhtde2n34i362fee4c\",\"site_id\":\"AA00\",\"service_name\":\"my service\",\"payment_group_reference\":\"2019-15662093545\",\"fees\":[],\"_links\":{\"self\":{\"href\":\"http://localhost:4421/card-payments/RC-1566-2093-5462-0545\",\"method\":\"GET\"}}}",
+    "body" : "{\"amount\":10,\"description\":\"description\",\"reference\":\"RC-1566-2093-5462-0545\",\"currency\":\"GBP\",\"ccd_case_number\":\"UNKNOWN\",\"case_reference\":\"4a8eb06a-66b6-4c62-acc9-250132b48a5a\",\"channel\":\"online\",\"method\":\"card\",\"external_provider\":\"gov pay\",\"status\":\"Initiated\",\"external_reference\":\"n2bvsq7ufhtde2n34i362fee4c\",\"case_type\":\"AA00\",\"service_name\":\"my service\",\"payment_group_reference\":\"2019-15662093545\",\"fees\":[],\"_links\":{\"self\":{\"href\":\"http://localhost:4421/card-payments/RC-1566-2093-5462-0545\",\"method\":\"GET\"}}}",
     "headers" : {
       "X-Content-Type-Options" : "nosniff",
       "X-XSS-Protection" : "1; mode=block",

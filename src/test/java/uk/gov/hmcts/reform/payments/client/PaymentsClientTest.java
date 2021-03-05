@@ -29,8 +29,7 @@ class PaymentsClientTest {
             .currency("currency")
             .description("description")
             .provider("provider")
-            .service("service")
-            .siteId("site ID")
+            .caseType("Case Type")
             .build();
 
     private static final CreditAccountPaymentRequest CREDIT_ACCOUNT_PAYMENT = CreditAccountPaymentRequest.builder()

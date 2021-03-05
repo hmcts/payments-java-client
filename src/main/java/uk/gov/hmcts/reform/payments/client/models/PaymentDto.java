@@ -46,6 +46,7 @@ public class PaymentDto {
     // at the time of writing, permitted services are FPL, CMC, DIVORCE, PROBATE, FINREM and DIGITAL_BAR
     private String serviceName;
     private String siteId;
+    private String caseType;
     private String status;
     private StatusHistoryDto[] statusHistories;
 }

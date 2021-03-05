@@ -50,9 +50,8 @@ class CreatePaymentTest extends BaseTest {
         .caseReference(UUID.randomUUID().toString())
         .ccdCaseNumber(CCD_CASE_NUMBER)
         .description(PAYMENT_DESCRIPTION)
-        .service(SERVICE)
         .currency(CURRENCY)
-        .siteId(SITE_ID)
+        .caseType(SITE_ID)
         .fees(new FeeDto[]{
             FeeDto.builder()
                 .id(1)

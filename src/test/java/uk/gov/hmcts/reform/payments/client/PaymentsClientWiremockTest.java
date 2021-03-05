@@ -12,8 +12,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.web.bind.annotation.RequestMethod;
 import uk.gov.hmcts.reform.authorisation.ServiceAuthorisationApi;
 import uk.gov.hmcts.reform.authorisation.generators.AuthTokenGenerator;
-import uk.gov.hmcts.reform.payments.client.PaymentsApi;
-import uk.gov.hmcts.reform.payments.client.PaymentsClient;
 import uk.gov.hmcts.reform.payments.client.models.FeeDto;
 import uk.gov.hmcts.reform.payments.client.models.PaymentDto;
 import uk.gov.hmcts.reform.payments.client.request.CardPaymentRequest;
@@ -96,8 +94,7 @@ class PaymentsClientWiremockTest {
                         .currency("GBP")
                         .description("description")
                         .fees(new FeeDto[0])
-                        .service("my service")
-                        .siteId("AA00")
+                        .caseType("AA00")
                         .build(),
                 "http://localhost",
                 "http://localhost"
