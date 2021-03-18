@@ -28,6 +28,5 @@ public class CardPaymentRequest {
     private FeeDto[] fees;
     private String provider;
     // at the time of writing, permitted services are CMC, DIVORCE, PROBATE, FINREM and DIGITAL_BAR
-    private String service;
-    private String siteId;
+    private String caseType;
 }
