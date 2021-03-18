@@ -5,6 +5,8 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 import uk.gov.hmcts.reform.authorisation.generators.AuthTokenGenerator;
 import uk.gov.hmcts.reform.payments.client.models.PaymentDto;
+import uk.gov.hmcts.reform.payments.client.request.CardPaymentRequest;
+import uk.gov.hmcts.reform.payments.client.request.CreditAccountPaymentRequest;
 
 @Service
 @ConditionalOnProperty(prefix = "payments", name = "api.url")
@@ -18,25 +20,35 @@ public class PaymentsClient {
         this.authTokenGenerator = authTokenGenerator;
     }
 
-    public PaymentDto createPayment(String authorisation, CardPaymentRequest paymentRequest, String redirectUrl) {
-        return paymentsApi.create(
+    public PaymentDto createCreditAccountPayment(String authorisation, CreditAccountPaymentRequest paymentRequest) {
+        return paymentsApi.createCreditAccountPayment(
                 authorisation,
                 authTokenGenerator.generate(),
-                redirectUrl,
                 paymentRequest
         );
     }
 
-    public PaymentDto retrievePayment(String authorisation, String paymentReference) {
-        return paymentsApi.retrieve(
+    public PaymentDto createCardPayment(String authorisation, CardPaymentRequest paymentRequest,
+                                        String redirectUrl, String serviceCallbackUrl) {
+        return paymentsApi.createCardPayment(
+                authorisation,
+                authTokenGenerator.generate(),
+                redirectUrl,
+                serviceCallbackUrl,
+                paymentRequest
+        );
+    }
+
+    public PaymentDto retrieveCardPayment(String authorisation, String paymentReference) {
+        return paymentsApi.retrieveCardPayment(
                 paymentReference,
                 authorisation,
                 authTokenGenerator.generate()
         );
     }
 
-    public void cancelPayment(String authorisation, String paymentReference) {
-        paymentsApi.cancel(
+    public void cancelCardPayment(String authorisation, String paymentReference) {
+        paymentsApi.cancelCardPayment(
                 paymentReference,
                 authorisation,
                 authTokenGenerator.generate()

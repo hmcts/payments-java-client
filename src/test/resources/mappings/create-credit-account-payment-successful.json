@@ -1,0 +1,31 @@
+{
+  "id": "603a01d7-0c0b-494d-ba4c-0d7165238523",
+  "name": "credit-account-payments",
+  "request": {
+    "url": "/credit-account-payments",
+    "method": "POST",
+    "bodyPatterns": [
+      {
+        "equalToJson": "{\n  \"case_reference\" : \"e1880a05-740e-4a71-a82a-4931cc09f791\",\n  \"ccd_case_number\" : \"UNKNOWN\",\n  \"description\" : \"description\",\n  \"service\" : \"my service\",\n  \"currency\" : \"GBP\",\n  \"site_id\" : \"AA00\",\n  \"fees\" : [ ],\n  \"amount\" : 10\n,\n  \"account_number\" : \"PBA1234567\"\n,\n  \"customer_reference\" : \"customer reference\"\n,\n  \"organisation_name\" : \"organisation name\"\n}",
+        "ignoreArrayOrder": true,
+        "ignoreExtraElements": true
+      }
+    ]
+  },
+  "response": {
+    "status": 201,
+    "body": "{\"reference\":\"RC-1566-2080-1331-6611\",\"date_created\":\"2020-08-19T09:46:54.021+0000\",\"status\":\"Initiated\",\"external_reference\":\"3pev48jhsin6n1sr91lgvi9j5o\",\"payment_group_reference\":\"2020-15662080132\",\"_links\":{\"next_url\":{\"href\":\"https://www.payments.service.gov.uk/secure/473320d7-4db4-42a5-935f-8bcaf0bd2058\",\"method\":\"GET\"}}}",
+    "headers": {
+      "X-Content-Type-Options": "nosniff",
+      "X-XSS-Protection": "1; mode=block",
+      "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
+      "Pragma": "no-cache",
+      "Expires": "0",
+      "X-Frame-Options": "DENY",
+      "Content-Type": "application/json;charset=UTF-8",
+      "Date": "Mon, 19 Aug 2019 09:46:54 GMT"
+    }
+  },
+  "uuid": "603a01d7-0c0b-494d-ba4c-0d7165238523",
+  "persistent": true
+}
