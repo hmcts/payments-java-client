@@ -12,12 +12,10 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.web.bind.annotation.RequestMethod;
 import uk.gov.hmcts.reform.authorisation.ServiceAuthorisationApi;
 import uk.gov.hmcts.reform.authorisation.generators.AuthTokenGenerator;
-import uk.gov.hmcts.reform.payments.client.PaymentsApi;
-import uk.gov.hmcts.reform.payments.client.PaymentsClient;
 import uk.gov.hmcts.reform.payments.client.models.FeeDto;
 import uk.gov.hmcts.reform.payments.client.models.PaymentDto;
-import uk.gov.hmcts.reform.payments.client.request.CardPaymentRequest;
-import uk.gov.hmcts.reform.payments.client.request.CreditAccountPaymentRequest;
+import uk.gov.hmcts.reform.payments.request.CardPaymentRequest;
+import uk.gov.hmcts.reform.payments.request.CreditAccountPaymentRequest;
 
 import java.math.BigDecimal;
 import java.util.Map;
@@ -96,8 +94,6 @@ class PaymentsClientWiremockTest {
                         .currency("GBP")
                         .description("description")
                         .fees(new FeeDto[0])
-                        .service("my service")
-                        .siteId("AA00")
                         .build(),
                 "http://localhost",
                 "http://localhost"

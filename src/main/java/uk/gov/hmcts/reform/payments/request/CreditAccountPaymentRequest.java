@@ -1,4 +1,4 @@
-package uk.gov.hmcts.reform.payments.client.request;
+package uk.gov.hmcts.reform.payments.request;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;

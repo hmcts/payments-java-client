@@ -5,8 +5,8 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 import uk.gov.hmcts.reform.authorisation.generators.AuthTokenGenerator;
 import uk.gov.hmcts.reform.payments.client.models.PaymentDto;
-import uk.gov.hmcts.reform.payments.client.request.CardPaymentRequest;
-import uk.gov.hmcts.reform.payments.client.request.CreditAccountPaymentRequest;
+import uk.gov.hmcts.reform.payments.request.CardPaymentRequest;
+import uk.gov.hmcts.reform.payments.request.CreditAccountPaymentRequest;
 
 @Service
 @ConditionalOnProperty(prefix = "payments", name = "api.url")
