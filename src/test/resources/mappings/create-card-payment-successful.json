@@ -6,7 +6,7 @@
     "method": "POST",
     "bodyPatterns": [
       {
-        "equalToJson": "{\n  \"case_reference\" : \"e1880a05-740e-4a71-a82a-4931cc09f790\",\n  \"ccd_case_number\" : \"UNKNOWN\",\n  \"description\" : \"description\",\n  \"service\" : \"my service\",\n  \"currency\" : \"GBP\",\n  \"site_id\" : \"AA00\",\n  \"fees\" : [ ],\n  \"amount\" : 10\n}",
+        "equalToJson": "{\n  \"case_reference\" : \"e1880a05-740e-4a71-a82a-4931cc09f790\",\n  \"ccd_case_number\" : \"UNKNOWN\",\n  \"description\" : \"description\",\n  \"currency\" : \"GBP\",\n  \"fees\" : [ ],\n  \"amount\" : 10\n}",
         "ignoreArrayOrder": true,
         "ignoreExtraElements": true
       }

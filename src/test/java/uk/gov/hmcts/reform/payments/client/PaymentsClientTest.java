@@ -8,8 +8,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.client.HttpClientErrorException;
 import uk.gov.hmcts.reform.authorisation.generators.AuthTokenGenerator;
-import uk.gov.hmcts.reform.payments.client.request.CardPaymentRequest;
-import uk.gov.hmcts.reform.payments.client.request.CreditAccountPaymentRequest;
+import uk.gov.hmcts.reform.payments.request.CardPaymentRequest;
+import uk.gov.hmcts.reform.payments.request.CreditAccountPaymentRequest;
 
 import java.math.BigDecimal;
 
@@ -29,8 +29,6 @@ class PaymentsClientTest {
             .currency("currency")
             .description("description")
             .provider("provider")
-            .service("service")
-            .siteId("site ID")
             .build();
 
     private static final CreditAccountPaymentRequest CREDIT_ACCOUNT_PAYMENT = CreditAccountPaymentRequest.builder()

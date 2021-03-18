@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import uk.gov.hmcts.reform.payments.client.health.InternalHealth;
 import uk.gov.hmcts.reform.payments.client.models.PaymentDto;
-import uk.gov.hmcts.reform.payments.client.request.CardPaymentRequest;
-import uk.gov.hmcts.reform.payments.client.request.CreditAccountPaymentRequest;
+import uk.gov.hmcts.reform.payments.request.CardPaymentRequest;
+import uk.gov.hmcts.reform.payments.request.CreditAccountPaymentRequest;
 
 @FeignClient(name = "payments-api", url = "${payments.api.url}")
 public interface PaymentsApi {

@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.web.bind.annotation.RequestMethod;
 import uk.gov.hmcts.reform.payments.client.models.FeeDto;
 import uk.gov.hmcts.reform.payments.client.models.PaymentDto;
-import uk.gov.hmcts.reform.payments.client.request.CardPaymentRequest;
+import uk.gov.hmcts.reform.payments.request.CardPaymentRequest;
 
 import java.math.BigDecimal;
 import java.util.UUID;
@@ -50,9 +50,7 @@ class CreatePaymentTest extends BaseTest {
         .caseReference(UUID.randomUUID().toString())
         .ccdCaseNumber(CCD_CASE_NUMBER)
         .description(PAYMENT_DESCRIPTION)
-        .service(SERVICE)
         .currency(CURRENCY)
-        .siteId(SITE_ID)
         .fees(new FeeDto[]{
             FeeDto.builder()
                 .id(1)
