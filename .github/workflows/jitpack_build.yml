@@ -1,13 +1,7 @@
 name: Trigger JitPack Build
 
 on:
-  pull_request:
-    branches:
-      - master
   push:
-    branches:
-      - master
-      - refs/tags/*
     tags:
       - '*'
 
