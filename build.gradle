@@ -29,7 +29,7 @@ dependencyUpdates.resolutionStrategy = {
     }
 }
 
-def springBootVersion = '2.2.5.RELEASE'
+def springBootVersion = '3.0.3'
 
 checkstyle {
     maxWarnings = 0
@@ -38,7 +38,7 @@ checkstyle {
     configDir = new File(rootDir, 'config/checkstyle')
 }
 
-sourceCompatibility = 1.8
+sourceCompatibility = 11
 
 compileJava {
     options.compilerArgs << '-parameters' << '-Xlint:deprecation'
@@ -51,6 +51,12 @@ compileTestJava {
 repositories {
     mavenLocal()
     jcenter()
+    maven {
+        url 'https://jitpack.io'
+    }
+    maven {
+        url "https://dl.bintray.com/hmcts/hmcts-maven"
+    }
 }
 
 jar {
@@ -146,6 +152,7 @@ dependencies {
     compile group: 'uk.gov.hmcts.reform', name: 'java-logging', version: versions.reformJavaLogging
 
     compile group: 'uk.gov.hmcts.reform', name: 'service-auth-provider-client', version: '3.1.1'
+    implementation group: 'io.github.openfeign', name: 'feign-annotation-error-decoder', version: '11.4'
 
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter', version: versions.junitJupiter
     testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test'

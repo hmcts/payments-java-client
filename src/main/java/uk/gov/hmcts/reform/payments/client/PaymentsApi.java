@@ -1,5 +1,7 @@
 package uk.gov.hmcts.reform.payments.client;
 
+import feign.error.ErrorCodes;
+import feign.error.ErrorHandling;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +18,9 @@ public interface PaymentsApi {
     @GetMapping("/health")
     InternalHealth health();
 
+    @ErrorHandling(codeSpecific =
+        @ErrorCodes(codes = {400}, generate = InvalidPaymentRequestException.class)
+    )
     @PostMapping(value = "/credit-account-payments", consumes = "application/json")
     PaymentDto createCreditAccountPayment(
             @RequestHeader("Authorization") String authorization,
