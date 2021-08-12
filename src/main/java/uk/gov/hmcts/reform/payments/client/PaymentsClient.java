@@ -2,6 +2,7 @@ package uk.gov.hmcts.reform.payments.client;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import uk.gov.hmcts.reform.authorisation.generators.AuthTokenGenerator;
 import uk.gov.hmcts.reform.payments.client.models.PaymentDto;
@@ -20,7 +21,8 @@ public class PaymentsClient {
         this.authTokenGenerator = authTokenGenerator;
     }
 
-    public PaymentDto createCreditAccountPayment(String authorisation, CreditAccountPaymentRequest paymentRequest) {
+    public ResponseEntity<PaymentDto> createCreditAccountPayment(String authorisation,
+                                                                 CreditAccountPaymentRequest paymentRequest) {
         return paymentsApi.createCreditAccountPayment(
                 authorisation,
                 authTokenGenerator.generate(),

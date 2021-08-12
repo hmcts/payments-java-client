@@ -16,4 +16,5 @@ public class PaymentClientAutoConfiguration {
     public PaymentsHealthIndicator paymentsHealthIndicator(PaymentsApi paymentsApi) {
         return new PaymentsHealthIndicator(paymentsApi);
     }
+
 }
