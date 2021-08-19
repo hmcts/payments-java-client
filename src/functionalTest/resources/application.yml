@@ -7,9 +7,9 @@ idam:
     username: 'idamowner@hmcts.net'
     password: 'Ref0rmIsFun'
   s2s-auth:
-    totp_secret: 'AABBCCDDEEFFGGHH'
-    microservice: 'civil_service'
-    url: 'http://localhost:4502'
+    totp_secret: 'AAAAAAAAAAAAAAA'
+    microservice: 'cmc'
+    url: 'http://localhost:4552'
   test-api:
     url: 'http://localhost:8081'
   client:
@@ -19,7 +19,7 @@ idam:
 
 payments:
   api:
-    url: 'http://localhost:8765'
+    url: 'http://localhost:4421'
 
 feign:
   httpclient:

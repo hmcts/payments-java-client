@@ -3,31 +3,40 @@ package uk.gov.hmcts.reform.payments.client.config;
 import feign.Response;
 import feign.codec.ErrorDecoder;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Component;
-import org.springframework.web.server.ResponseStatusException;
+import org.springframework.util.StreamUtils;
+import uk.gov.hmcts.reform.payments.client.InvalidPaymentRequestException;
 
-@Component
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+
+import static feign.FeignException.errorStatus;
+
 @Slf4j
 public class FeignErrorDecoder implements ErrorDecoder {
 
+    public static final String DUPLICATE_PAYMENT = "Duplicate Payment";
+
     @Override
     public Exception decode(String methodKey, Response response) {
-        switch (response.status()) {
-            case 400:
-                log.error("Status code " + response.status() + ", methodKey = " + methodKey);
-                return  new ;
-            case 404: {
-                log.error("Error took place when using Feign client to send HTTP Request."
-                        + " Status code "
-                        + response.status()
-                        + ", methodKey = "
-                        + methodKey);
-                return new ResponseStatusException(HttpStatus.valueOf(response.status()),
-                        "<You can add error message description here>");
-            }
-            default:
-                return new Exception(response.reason());
+        String responseBody = getResponseBodyString(response);
+        log.error("Response body from Payment client is {}", responseBody);
+
+        if (response.status() == 400 && responseBody.equals(DUPLICATE_PAYMENT)) {
+            log.error("Error took place when using Feign client to send HTTP Request."
+                    + " Status code "
+                    + response.status()
+                    + ", methodKey = "
+                    + methodKey);
+            return new InvalidPaymentRequestException(responseBody);
+        }
+        return errorStatus(methodKey, response);
+    }
+
+    private String getResponseBodyString(Response response) {
+        try {
+            return StreamUtils.copyToString(response.body().asInputStream(), StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            return "error read response body. " + e.getMessage();
         }
     }
 }

@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.cloud.contract.wiremock.AutoConfigureWireMock;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -50,7 +49,7 @@ class PaymentsClientWiremockTest {
 
     @Test
     void testCreateCreditAccountPayment() {
-        ResponseEntity<PaymentDto> response = paymentsClient.createCreditAccountPayment(
+        PaymentDto payment = paymentsClient.createCreditAccountPayment(
                 "Authorisation",
                 CreditAccountPaymentRequest.builder()
                         .amount(BigDecimal.TEN)
@@ -66,7 +65,6 @@ class PaymentsClientWiremockTest {
                         .organisationName("organisation name")
                         .build()
         );
-        PaymentDto payment = response.getBody();
         assertNotNull(payment);
         assertAll(
             () -> assertEquals("RC-1566-2080-1331-6611", payment.getReference()),

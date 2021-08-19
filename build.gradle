@@ -152,7 +152,6 @@ dependencies {
     compile group: 'uk.gov.hmcts.reform', name: 'java-logging', version: versions.reformJavaLogging
 
     compile group: 'uk.gov.hmcts.reform', name: 'service-auth-provider-client', version: '3.1.1'
-    implementation group: 'io.github.openfeign', name: 'feign-annotation-error-decoder', version: '11.4'
 
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter', version: versions.junitJupiter
     testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test'

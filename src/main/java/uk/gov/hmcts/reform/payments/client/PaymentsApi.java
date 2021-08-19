@@ -1,24 +1,24 @@
 package uk.gov.hmcts.reform.payments.client;
 
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
+import uk.gov.hmcts.reform.payments.client.config.PaymentClientConfiguration;
 import uk.gov.hmcts.reform.payments.client.health.InternalHealth;
 import uk.gov.hmcts.reform.payments.client.models.PaymentDto;
 import uk.gov.hmcts.reform.payments.request.CardPaymentRequest;
 import uk.gov.hmcts.reform.payments.request.CreditAccountPaymentRequest;
 
-@FeignClient(name = "payments-api", url = "${payments.api.url}")
+@FeignClient(name = "payments-api", url = "${payments.api.url}", configuration = PaymentClientConfiguration.class)
 public interface PaymentsApi {
     @GetMapping("/health")
     InternalHealth health();
 
     @PostMapping(value = "/credit-account-payments", consumes = "application/json")
-    ResponseEntity<PaymentDto> createCreditAccountPayment(
+    PaymentDto createCreditAccountPayment(
             @RequestHeader("Authorization") String authorization,
             @RequestHeader("ServiceAuthorization") String serviceAuthorization,
             @RequestBody CreditAccountPaymentRequest paymentRequest
