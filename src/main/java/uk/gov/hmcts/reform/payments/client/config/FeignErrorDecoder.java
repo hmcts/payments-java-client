@@ -20,6 +20,7 @@ public class FeignErrorDecoder implements ErrorDecoder {
     @Override
     public Exception decode(String methodKey, Response response) {
         byte[] bytes = getBytes(response);
+        Response output = response.toBuilder().body(bytes).build();
         final String responseBody = new String(bytes, StandardCharsets.UTF_8);
 
         if (response.status() == 400 && responseBody.equals(DUPLICATE_PAYMENT)) {
@@ -30,7 +31,7 @@ public class FeignErrorDecoder implements ErrorDecoder {
                     + methodKey);
             return new InvalidPaymentRequestException(responseBody);
         }
-        return defaultErrorDecoder.decode(methodKey, response.toBuilder().body(bytes).build());
+        return defaultErrorDecoder.decode(methodKey, output);
     }
 
     private byte[] getBytes(Response response) {
