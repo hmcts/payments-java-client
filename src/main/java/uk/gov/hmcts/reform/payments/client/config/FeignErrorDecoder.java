@@ -23,7 +23,7 @@ public class FeignErrorDecoder implements ErrorDecoder {
         Response output = response.toBuilder().body(bytes).build();
         final String responseBody = new String(bytes, StandardCharsets.UTF_8);
 
-        if (response.status() == 400 && responseBody.equals(DUPLICATE_PAYMENT)) {
+        if (response.status() == 400 && responseBody.equalsIgnoreCase(DUPLICATE_PAYMENT)) {
             log.error("Error took place when using Feign client to send HTTP Request."
                     + " Status code "
                     + response.status()
