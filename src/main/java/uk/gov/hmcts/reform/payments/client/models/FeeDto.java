@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Data
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @Builder
