@@ -7,6 +7,9 @@ import uk.gov.hmcts.reform.authorisation.generators.AuthTokenGenerator;
 import uk.gov.hmcts.reform.payments.client.models.PaymentDto;
 import uk.gov.hmcts.reform.payments.request.CardPaymentRequest;
 import uk.gov.hmcts.reform.payments.request.CreditAccountPaymentRequest;
+import uk.gov.hmcts.reform.payments.request.PaymentServiceRequest;
+import uk.gov.hmcts.reform.payments.request.ServiceRequestPayment;
+import uk.gov.hmcts.reform.payments.response.PaymentServiceResponse;
 
 @Service
 @ConditionalOnProperty(prefix = "payments", name = "api.url")
@@ -52,6 +55,24 @@ public class PaymentsClient {
                 paymentReference,
                 authorisation,
                 authTokenGenerator.generate()
+        );
+    }
+
+    public PaymentServiceResponse createServiceRequest(String authorisation, PaymentServiceRequest paymentRequest) {
+        return paymentsApi.createServiceRequest(
+                authorisation,
+                authTokenGenerator.generate(),
+                paymentRequest
+        );
+    }
+
+    public PaymentDto createPbaPayment(String serviceReqReference, String authorisation,
+                                       ServiceRequestPayment paymentRequest) {
+        return paymentsApi.createPbaPayment(
+                serviceReqReference,
+                authorisation,
+                authTokenGenerator.generate(),
+                paymentRequest
         );
     }
 }
