@@ -8,11 +8,16 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.client.HttpClientErrorException;
 import uk.gov.hmcts.reform.authorisation.generators.AuthTokenGenerator;
+import uk.gov.hmcts.reform.payments.client.models.CasePaymentRequestDto;
+import uk.gov.hmcts.reform.payments.client.models.FeeDto;
 import uk.gov.hmcts.reform.payments.request.CardPaymentRequest;
+import uk.gov.hmcts.reform.payments.request.CreateServiceRequestDTO;
 import uk.gov.hmcts.reform.payments.request.CreditAccountPaymentRequest;
+import uk.gov.hmcts.reform.payments.request.PBAServiceRequestDTO;
 
 import java.math.BigDecimal;
 
+import static java.math.BigDecimal.ROUND_UNNECESSARY;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doThrow;
@@ -21,6 +26,22 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class PaymentsClientTest {
+
+    private static final BigDecimal TEN_2_DP = BigDecimal.TEN.setScale(2, ROUND_UNNECESSARY);
+
+    private static final String CCD_CASE_NUMBER = "UNKNOWN";
+    private static final BigDecimal FEE_AMOUNT = TEN_2_DP;
+    private static final String FEE_CODE = "FEE0234";
+    private static final String FEE_DESCRIPTION = "A sample fee";
+    private static final String FEE_REFERENCE = "reference";
+    private static final String FEE_VERSION = "version";
+    private static final Integer FEE_VOLUME = 1;
+    private static final String JURISDICTION_1 = "jurisdiction 1";
+    private static final String JURISDICTION_2 = "jurisdiction 2";
+    private static final String MEMO_LINE = "Memo line";
+    private static final String NATURAL_ACCOUNT_CODE = "natural account code";
+    private static final BigDecimal NET_FEE_AMOUNT = TEN_2_DP;
+
     private static final CardPaymentRequest CARD_PAYMENT_REQUEST = CardPaymentRequest.builder()
             .amount(BigDecimal.valueOf(999.99))
             .caseReference("case reference")
@@ -44,6 +65,39 @@ class PaymentsClientTest {
             .siteId("site ID")
             .build();
 
+    private static final CreateServiceRequestDTO SERVICE_REQUEST = CreateServiceRequestDTO.builder()
+            .callBackUrl("callbackurl")
+            .casePaymentRequest(CasePaymentRequestDto.builder().action("action").responsibleParty("party").build())
+            .caseReference("case reference")
+            .ccdCaseNumber("ccd case number")
+            .fees(new FeeDto[]{
+                    FeeDto.builder()
+                            .id(1)
+                            .calculatedAmount(FEE_AMOUNT)
+                            .ccdCaseNumber(CCD_CASE_NUMBER)
+                            .code(FEE_CODE)
+                            .description(FEE_DESCRIPTION)
+                            .jurisdiction1(JURISDICTION_1)
+                            .jurisdiction2(JURISDICTION_2)
+                            .memoLine(MEMO_LINE)
+                            .naturalAccountCode(NATURAL_ACCOUNT_CODE)
+                            .netAmount(NET_FEE_AMOUNT)
+                            .reference(FEE_REFERENCE)
+                            .version(FEE_VERSION)
+                            .volume(FEE_VOLUME)
+                            .build()
+            })
+            .organisationId("organisation id")
+            .build();
+
+    private static final PBAServiceRequestDTO SERVICE_REQUEST_PAYMENT = PBAServiceRequestDTO.builder()
+            .accountNumber("acc number")
+            .amount(FEE_AMOUNT)
+            .currency("currency")
+            .customerReference("customer reference")
+            .idempotencyKey("key")
+            .organisationName("organisation name").build();
+
     @Mock
     private PaymentsApi paymentsApi;
 
@@ -56,6 +110,23 @@ class PaymentsClientTest {
     void setUp() {
         client = new PaymentsClient(paymentsApi, authTokenGenerator);
         when(authTokenGenerator.generate()).thenReturn("auth token");
+    }
+
+    @Test
+    void createServiceRequestShouldInvokePaymentsApi() {
+        client.createServiceRequest("authorisation", SERVICE_REQUEST);
+
+        verify(paymentsApi).createServiceRequest("authorisation", "auth token", SERVICE_REQUEST);
+    }
+
+    @Test
+    void createServiceRequestShouldPropagateExceptions() {
+        when(authTokenGenerator.generate())
+                .thenThrow(new RuntimeException("expected exception for create payment"));
+
+        assertThatThrownBy(() -> client.createServiceRequest("authorisation", SERVICE_REQUEST))
+                .isInstanceOf(RuntimeException.class)
+                .hasMessage("expected exception for create payment");
     }
 
     @Test
@@ -126,5 +197,22 @@ class PaymentsClientTest {
         assertThatThrownBy(() -> client.cancelCardPayment("authorisation", "payment reference"))
                 .isInstanceOf(HttpClientErrorException.class)
                 .hasMessage("404 Payment Not found");
+    }
+
+    @Test
+    void createPbaPaymentShouldInvokePaymentsApi() {
+        client.createPbaPayment("reference", "authorisation", SERVICE_REQUEST_PAYMENT);
+
+        verify(paymentsApi).createPbaPayment("reference", "authorisation", "auth token", SERVICE_REQUEST_PAYMENT);
+    }
+
+    @Test
+    void createPbaPaymentShouldPropagateExceptions() {
+        when(authTokenGenerator.generate())
+                .thenThrow(new RuntimeException("expected exception for create payment"));
+
+        assertThatThrownBy(() -> client.createPbaPayment("reference", "authorisation", SERVICE_REQUEST_PAYMENT))
+                .isInstanceOf(RuntimeException.class)
+                .hasMessage("expected exception for create payment");
     }
 }

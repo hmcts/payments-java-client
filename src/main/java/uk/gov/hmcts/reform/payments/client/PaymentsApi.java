@@ -10,7 +10,11 @@ import uk.gov.hmcts.reform.payments.client.config.PaymentClientConfiguration;
 import uk.gov.hmcts.reform.payments.client.health.InternalHealth;
 import uk.gov.hmcts.reform.payments.client.models.PaymentDto;
 import uk.gov.hmcts.reform.payments.request.CardPaymentRequest;
+import uk.gov.hmcts.reform.payments.request.CreateServiceRequestDTO;
 import uk.gov.hmcts.reform.payments.request.CreditAccountPaymentRequest;
+import uk.gov.hmcts.reform.payments.request.PBAServiceRequestDTO;
+import uk.gov.hmcts.reform.payments.response.PBAServiceRequestResponse;
+import uk.gov.hmcts.reform.payments.response.PaymentServiceResponse;
 
 @FeignClient(name = "payments-api", url = "${payments.api.url}", configuration = PaymentClientConfiguration.class)
 public interface PaymentsApi {
@@ -45,5 +49,20 @@ public interface PaymentsApi {
             @PathVariable("paymentReference") String paymentReference,
             @RequestHeader("Authorization") String authorization,
             @RequestHeader("ServiceAuthorization") String serviceAuthorization
+    );
+
+    @PostMapping(value = "/service-request", consumes = "application/json")
+    PaymentServiceResponse createServiceRequest(
+            @RequestHeader("Authorization") String authorization,
+            @RequestHeader("ServiceAuthorization") String serviceAuthorization,
+            @RequestBody CreateServiceRequestDTO paymentRequest
+    );
+
+    @PostMapping(value = "/service-request/{service-request-reference}/pba-payments", consumes = "application/json")
+    PBAServiceRequestResponse createPbaPayment(
+            @PathVariable("service-request-reference") String serviceReqReference,
+            @RequestHeader("Authorization") String authorization,
+            @RequestHeader("ServiceAuthorization") String serviceAuthorization,
+            @RequestBody PBAServiceRequestDTO paymentRequest
     );
 }

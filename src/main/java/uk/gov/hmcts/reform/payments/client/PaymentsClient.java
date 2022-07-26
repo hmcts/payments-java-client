@@ -6,7 +6,11 @@ import org.springframework.stereotype.Service;
 import uk.gov.hmcts.reform.authorisation.generators.AuthTokenGenerator;
 import uk.gov.hmcts.reform.payments.client.models.PaymentDto;
 import uk.gov.hmcts.reform.payments.request.CardPaymentRequest;
+import uk.gov.hmcts.reform.payments.request.CreateServiceRequestDTO;
 import uk.gov.hmcts.reform.payments.request.CreditAccountPaymentRequest;
+import uk.gov.hmcts.reform.payments.request.PBAServiceRequestDTO;
+import uk.gov.hmcts.reform.payments.response.PBAServiceRequestResponse;
+import uk.gov.hmcts.reform.payments.response.PaymentServiceResponse;
 
 @Service
 @ConditionalOnProperty(prefix = "payments", name = "api.url")
@@ -52,6 +56,24 @@ public class PaymentsClient {
                 paymentReference,
                 authorisation,
                 authTokenGenerator.generate()
+        );
+    }
+
+    public PaymentServiceResponse createServiceRequest(String authorisation, CreateServiceRequestDTO paymentRequest) {
+        return paymentsApi.createServiceRequest(
+                authorisation,
+                authTokenGenerator.generate(),
+                paymentRequest
+        );
+    }
+
+    public PBAServiceRequestResponse createPbaPayment(String serviceReqReference, String authorisation,
+                                                      PBAServiceRequestDTO paymentRequest) {
+        return paymentsApi.createPbaPayment(
+                serviceReqReference,
+                authorisation,
+                authTokenGenerator.generate(),
+                paymentRequest
         );
     }
 }
