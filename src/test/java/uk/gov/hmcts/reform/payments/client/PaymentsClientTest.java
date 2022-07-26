@@ -11,9 +11,9 @@ import uk.gov.hmcts.reform.authorisation.generators.AuthTokenGenerator;
 import uk.gov.hmcts.reform.payments.client.models.CasePaymentRequestDto;
 import uk.gov.hmcts.reform.payments.client.models.FeeDto;
 import uk.gov.hmcts.reform.payments.request.CardPaymentRequest;
+import uk.gov.hmcts.reform.payments.request.CreateServiceRequestDTO;
 import uk.gov.hmcts.reform.payments.request.CreditAccountPaymentRequest;
-import uk.gov.hmcts.reform.payments.request.PaymentServiceRequest;
-import uk.gov.hmcts.reform.payments.request.ServiceRequestPayment;
+import uk.gov.hmcts.reform.payments.request.PBAServiceRequestDTO;
 
 import java.math.BigDecimal;
 
@@ -65,7 +65,7 @@ class PaymentsClientTest {
             .siteId("site ID")
             .build();
 
-    private static final PaymentServiceRequest SERVICE_REQUEST = PaymentServiceRequest.builder()
+    private static final CreateServiceRequestDTO SERVICE_REQUEST = CreateServiceRequestDTO.builder()
             .callBackUrl("callbackurl")
             .casePaymentRequest(CasePaymentRequestDto.builder().action("action").responsibleParty("party").build())
             .caseReference("case reference")
@@ -90,7 +90,7 @@ class PaymentsClientTest {
             .organisationId("organisation id")
             .build();
 
-    private static final ServiceRequestPayment SERVICE_REQUEST_PAYMENT = ServiceRequestPayment.builder()
+    private static final PBAServiceRequestDTO SERVICE_REQUEST_PAYMENT = PBAServiceRequestDTO.builder()
             .accountNumber("acc number")
             .amount(FEE_AMOUNT)
             .currency("currency")
