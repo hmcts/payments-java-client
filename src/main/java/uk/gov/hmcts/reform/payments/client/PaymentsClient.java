@@ -9,6 +9,7 @@ import uk.gov.hmcts.reform.payments.request.CardPaymentRequest;
 import uk.gov.hmcts.reform.payments.request.CreateServiceRequestDTO;
 import uk.gov.hmcts.reform.payments.request.CreditAccountPaymentRequest;
 import uk.gov.hmcts.reform.payments.request.PBAServiceRequestDTO;
+import uk.gov.hmcts.reform.payments.response.PBAServiceRequestResponse;
 import uk.gov.hmcts.reform.payments.response.PaymentServiceResponse;
 
 @Service
@@ -66,8 +67,8 @@ public class PaymentsClient {
         );
     }
 
-    public PaymentDto createPbaPayment(String serviceReqReference, String authorisation,
-                                       PBAServiceRequestDTO paymentRequest) {
+    public PBAServiceRequestResponse createPbaPayment(String serviceReqReference, String authorisation,
+                                                      PBAServiceRequestDTO paymentRequest) {
         return paymentsApi.createPbaPayment(
                 serviceReqReference,
                 authorisation,
