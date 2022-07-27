@@ -87,7 +87,7 @@ class PaymentsClientTest {
                             .volume(FEE_VOLUME)
                             .build()
             })
-            .organisationId("organisation id")
+            .hmctsOrgId("organisation id")
             .build();
 
     private static final PBAServiceRequestDTO SERVICE_REQUEST_PAYMENT = PBAServiceRequestDTO.builder()

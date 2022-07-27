@@ -24,7 +24,7 @@ public class CreateServiceRequestDTO {
     private String ccdCaseNumber;
     @JsonProperty("fees")
     private FeeDto[] fees;
-    @JsonProperty("organisation_id")
-    private String organisationId;
+    @JsonProperty("hmcts_org_id")
+    private String hmctsOrgId;
 
 }
