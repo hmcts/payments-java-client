@@ -25,6 +25,6 @@ public class PBAServiceRequestDTO {
     private String customerReference;
     @JsonProperty("idempotency_key")
     private String idempotencyKey;
-    @JsonProperty("organisationName")
+    @JsonProperty("organisation_name")
     private String organisationName;
 }
