@@ -28,8 +28,8 @@ public class PostcodeValidator {
             For more details, refer to https://tools.hmcts.net/jira/browse/ROC-9113
             */
             if (postcode.toUpperCase(Locale.UK).trim().startsWith("BT")
-                || !(postcodeLookupService.validatePostCodeForDefendant(
-                postcode))) {
+                    || !(postcodeLookupService.validatePostCodeForDefendant(
+                    postcode))) {
                 errors.add("Postcode must be in England or Wales");
             }
         } else {

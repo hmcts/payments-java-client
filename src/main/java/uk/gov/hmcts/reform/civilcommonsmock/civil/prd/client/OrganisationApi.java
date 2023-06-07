@@ -14,14 +14,14 @@ public interface OrganisationApi {
 
     @GetMapping("/refdata/external/v1/organisations")
     Organisation findUserOrganisation(
-        @RequestHeader(AUTHORIZATION) String authorisation,
-        @RequestHeader(SERVICE_AUTHORIZATION) String serviceAuthorization
+            @RequestHeader(AUTHORIZATION) String authorisation,
+            @RequestHeader(SERVICE_AUTHORIZATION) String serviceAuthorization
     );
 
     @GetMapping("/refdata/internal/v1/organisations")
     Organisation findOrganisationById(
-        @RequestHeader(AUTHORIZATION) String authorisation,
-        @RequestHeader(SERVICE_AUTHORIZATION) String serviceAuthorization,
-        @RequestParam("id") String organisationId
+            @RequestHeader(AUTHORIZATION) String authorisation,
+            @RequestHeader(SERVICE_AUTHORIZATION) String serviceAuthorization,
+            @RequestParam("id") String organisationId
     );
 }

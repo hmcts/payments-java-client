@@ -19,7 +19,7 @@ import uk.gov.hmcts.reform.ccd.document.am.model.UploadResponse;
 import uk.gov.hmcts.reform.civilcommonsmock.civil.documentmanagement.model.CaseDocument;
 import uk.gov.hmcts.reform.civilcommonsmock.civil.documentmanagement.model.PDF;
 import uk.gov.hmcts.reform.civilcommonsmock.civil.helpers.LocalDateTimeHelper;
-import uk.gov.hmcts.reform.civilcommonsmock.civil.service.UserService;
+import uk.gov.hmcts.reform.civilcommonsmock.civil.notify.service.UserService;
 import uk.gov.hmcts.reform.document.DocumentDownloadClientApi;
 import uk.gov.hmcts.reform.document.utils.InMemoryMultipartFile;
 import uk.gov.hmcts.reform.idam.client.models.UserInfo;
@@ -55,42 +55,42 @@ public class SecuredDocumentManagementService implements DocumentManagementServi
         log.info("Uploading file {}", originalFileName);
         try {
             MultipartFile file
-                = new InMemoryMultipartFile(FILES_NAME, originalFileName, APPLICATION_PDF_VALUE, pdf.getBytes()
+                    = new InMemoryMultipartFile(FILES_NAME, originalFileName, APPLICATION_PDF_VALUE, pdf.getBytes()
             );
 
             DocumentUploadRequest documentUploadRequest = new DocumentUploadRequest(
-                Classification.RESTRICTED.toString(),
-                "CIVIL",
-                "CIVIL",
-                Collections.singletonList(file)
+                    Classification.RESTRICTED.toString(),
+                    "CIVIL",
+                    "CIVIL",
+                    Collections.singletonList(file)
             );
 
             UploadResponse response = caseDocumentClientApi.uploadDocuments(
-                authorisation,
-                authTokenGenerator.generate(),
-                documentUploadRequest
+                    authorisation,
+                    authTokenGenerator.generate(),
+                    documentUploadRequest
             );
 
             Document document = response.getDocuments().stream()
-                .findFirst()
-                .orElseThrow(() -> new DocumentUploadException(originalFileName));
+                    .findFirst()
+                    .orElseThrow(() -> new DocumentUploadException(originalFileName));
 
             return CaseDocument.builder()
-                .documentLink(uk.gov.hmcts.reform.civilcommonsmock.civil.documentmanagement.model.Document.builder()
-                                  .documentUrl(document.links.self.href)
-                                  .documentBinaryUrl(document.links.binary.href)
-                                  .documentFileName(originalFileName)
-                                  .documentHash(document.hashToken)
-                                  .build())
-                .documentName(originalFileName)
-                .documentType(pdf.getDocumentType())
-                .createdDatetime(LocalDateTimeHelper.fromUTC(document.createdOn
-                                                                 .toInstant()
-                                                                 .atZone(ZoneId.systemDefault())
-                                                                 .toLocalDateTime()))
-                .documentSize(document.size)
-                .createdBy(CREATED_BY)
-                .build();
+                    .documentLink(uk.gov.hmcts.reform.civilcommonsmock.civil.documentmanagement.model.Document.builder()
+                            .documentUrl(document.links.self.href)
+                            .documentBinaryUrl(document.links.binary.href)
+                            .documentFileName(originalFileName)
+                            .documentHash(document.hashToken)
+                            .build())
+                    .documentName(originalFileName)
+                    .documentType(pdf.getDocumentType())
+                    .createdDatetime(LocalDateTimeHelper.fromUTC(document.createdOn
+                            .toInstant()
+                            .atZone(ZoneId.systemDefault())
+                            .toLocalDateTime()))
+                    .documentSize(document.size)
+                    .createdBy(CREATED_BY)
+                    .build();
         } catch (Exception ex) {
             log.error("Failed uploading file {}", originalFileName, ex);
             throw new DocumentUploadException(originalFileName, ex);
@@ -106,26 +106,26 @@ public class SecuredDocumentManagementService implements DocumentManagementServi
             String userRoles = String.join(",", this.documentManagementConfiguration.getUserRoles());
 
             ResponseEntity<Resource> responseEntity = caseDocumentClientApi.getDocumentBinary(
-                authorisation,
-                authTokenGenerator.generate(),
-                UUID.fromString(documentPath.substring(documentPath.lastIndexOf("/") + 1))
+                    authorisation,
+                    authTokenGenerator.generate(),
+                    UUID.fromString(documentPath.substring(documentPath.lastIndexOf("/") + 1))
             );
 
             if (responseEntity == null) {
                 Document documentMetadata = getDocumentMetaData(authorisation, documentPath);
                 responseEntity = documentDownloadClientApi.downloadBinary(
-                    authorisation,
-                    authTokenGenerator.generate(),
-                    userRoles,
-                    userInfo.getUid(),
-                    URI.create(documentMetadata.links.binary.href).getPath().replaceFirst("/", "")
+                        authorisation,
+                        authTokenGenerator.generate(),
+                        userRoles,
+                        userInfo.getUid(),
+                        URI.create(documentMetadata.links.binary.href).getPath().replaceFirst("/", "")
                 );
             }
 
             return Optional.ofNullable(responseEntity.getBody())
-                .map(ByteArrayResource.class::cast)
-                .map(ByteArrayResource::getByteArray)
-                .orElseThrow(RuntimeException::new);
+                    .map(ByteArrayResource.class::cast)
+                    .map(ByteArrayResource::getByteArray)
+                    .orElseThrow(RuntimeException::new);
         } catch (Exception ex) {
             log.error("Failed downloading document {}", documentPath, ex);
             throw new DocumentDownloadException(documentPath, ex);
@@ -137,9 +137,9 @@ public class SecuredDocumentManagementService implements DocumentManagementServi
 
         try {
             return caseDocumentClientApi.getMetadataForDocument(
-                authorisation,
-                authTokenGenerator.generate(),
-                getDocumentIdFromSelfHref(documentPath)
+                    authorisation,
+                    authTokenGenerator.generate(),
+                    getDocumentIdFromSelfHref(documentPath)
             );
 
         } catch (Exception ex) {

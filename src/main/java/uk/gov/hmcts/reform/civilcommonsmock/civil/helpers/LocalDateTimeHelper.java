@@ -13,7 +13,7 @@ public class LocalDateTimeHelper {
 
     public static LocalDateTime fromUTC(LocalDateTime input) {
         return input.atZone(UTC_ZONE)
-            .withZoneSameInstant(LOCAL_ZONE)
-            .toLocalDateTime();
+                .withZoneSameInstant(LOCAL_ZONE)
+                .toLocalDateTime();
     }
 }

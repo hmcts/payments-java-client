@@ -16,10 +16,10 @@ public class NotificationService {
     private final NotificationClient notificationClient;
 
     public void sendMail(
-        String targetEmail,
-        String emailTemplate,
-        Map<String, String> parameters,
-        String reference
+            String targetEmail,
+            String emailTemplate,
+            Map<String, String> parameters,
+            String reference
     ) {
         try {
             notificationClient.sendEmail(emailTemplate, targetEmail, parameters, reference);

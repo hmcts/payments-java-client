@@ -34,9 +34,9 @@ public class EmailAttachment {
 
     private static EmailAttachment create(String contentType, byte[] content, String filename) {
         return new EmailAttachment(
-            new ByteArrayResource(content),
-            contentType,
-            filename
+                new ByteArrayResource(content),
+                contentType,
+                filename
         );
     }
 }

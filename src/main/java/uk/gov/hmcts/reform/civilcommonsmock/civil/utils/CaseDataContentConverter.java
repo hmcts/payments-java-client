@@ -14,16 +14,16 @@ public class CaseDataContentConverter {
     }
 
     public static CaseDataContent caseDataContentFromStartEventResponse(
-        StartEventResponse startEventResponse, Map<String, Object> contentModified) {
+            StartEventResponse startEventResponse, Map<String, Object> contentModified) {
         var payload = new HashMap<>(startEventResponse.getCaseDetails().getData());
         payload.putAll(contentModified);
 
         return CaseDataContent.builder()
-            .eventToken(startEventResponse.getToken())
-            .event(Event.builder()
-                       .id(startEventResponse.getEventId())
-                       .build())
-            .data(payload)
-            .build();
+                .eventToken(startEventResponse.getToken())
+                .event(Event.builder()
+                        .id(startEventResponse.getEventId())
+                        .build())
+                .data(payload)
+                .build();
     }
 }

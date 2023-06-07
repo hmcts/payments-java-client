@@ -23,8 +23,8 @@ public class NonWorkingDaysCollection {
         try {
             String data = ResourceReader.readString(dataResource);
             return Arrays.stream(data.split("[\r\n]+"))
-                .map(String::trim)
-                .anyMatch(Predicate.isEqual(isoDate));
+                    .map(String::trim)
+                    .anyMatch(Predicate.isEqual(isoDate));
         } catch (IllegalStateException e) {
             // thrown from ResourceReader#readString
             return false;

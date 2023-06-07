@@ -14,8 +14,8 @@ public class ResourceReader {
 
     public static String readString(String resourcePath) {
         return new String(
-            readBytes(resourcePath),
-            StandardCharsets.UTF_8
+                readBytes(resourcePath),
+                StandardCharsets.UTF_8
         );
     }
 

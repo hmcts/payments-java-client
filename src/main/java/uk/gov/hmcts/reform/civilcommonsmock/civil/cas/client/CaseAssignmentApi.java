@@ -16,27 +16,27 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static uk.gov.hmcts.reform.ccd.client.CoreCaseDataApi.SERVICE_AUTHORIZATION;
 
 @FeignClient(
-    name = "case-assignment-api",
-    url = "${aca.api.baseurl}",
-    configuration = FeignClientProperties.FeignClientConfiguration.class
+        name = "case-assignment-api",
+        url = "${aca.api.baseurl}",
+        configuration = FeignClientProperties.FeignClientConfiguration.class
 )
 public interface CaseAssignmentApi {
 
     @PostMapping(
-        value = "/noc/apply-decision",
-        consumes = MediaType.APPLICATION_JSON_VALUE)
+            value = "/noc/apply-decision",
+            consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     AboutToStartOrSubmitCallbackResponse applyDecision(
-        @RequestHeader(AUTHORIZATION) String authorisation,
-        @RequestHeader(SERVICE_AUTHORIZATION) String serviceAuthorization,
-        @RequestBody DecisionRequest decisionRequest);
+            @RequestHeader(AUTHORIZATION) String authorisation,
+            @RequestHeader(SERVICE_AUTHORIZATION) String serviceAuthorization,
+            @RequestBody DecisionRequest decisionRequest);
 
     @PostMapping(
-        value = "/noc/check-noc-approval",
-        consumes = MediaType.APPLICATION_JSON_VALUE)
+            value = "/noc/check-noc-approval",
+            consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     SubmittedCallbackResponse checkNocApproval(
-        @RequestHeader(AUTHORIZATION) String authorisation,
-        @RequestHeader(SERVICE_AUTHORIZATION) String serviceAuthorization,
-        @RequestBody CallbackRequest callbackRequest);
+            @RequestHeader(AUTHORIZATION) String authorisation,
+            @RequestHeader(SERVICE_AUTHORIZATION) String serviceAuthorization,
+            @RequestBody CallbackRequest callbackRequest);
 }

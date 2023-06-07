@@ -21,8 +21,8 @@ public class WorkingDayIndicator {
      */
     public boolean isWorkingDay(LocalDate date) {
         return !isWeekend(date)
-            && !isPublicHoliday(date)
-            && !isCustomNonWorkingDay(date);
+                && !isPublicHoliday(date)
+                && !isCustomNonWorkingDay(date);
     }
 
     public boolean isWeekend(LocalDate date) {

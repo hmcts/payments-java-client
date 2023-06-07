@@ -17,8 +17,8 @@ public class StringUtils {
             return null;
         }
         return Stream.of(values)
-            .filter(Objects::nonNull)
-            .filter(Predicate.not(String::isBlank))
-            .collect(Collectors.joining(delimiter));
+                .filter(Objects::nonNull)
+                .filter(Predicate.not(String::isBlank))
+                .collect(Collectors.joining(delimiter));
     }
 }

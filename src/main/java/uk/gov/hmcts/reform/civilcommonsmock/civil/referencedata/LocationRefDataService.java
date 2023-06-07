@@ -32,11 +32,11 @@ public class LocationRefDataService {
     public LocationRefData getCcmccLocation(String authToken) {
         try {
             ResponseEntity<List<LocationRefData>> responseEntity = restTemplate.exchange(
-                buildURIforCcmcc(),
-                HttpMethod.GET,
-                getHeaders(authToken),
-                new ParameterizedTypeReference<List<LocationRefData>>() {
-                }
+                    buildURIforCcmcc(),
+                    HttpMethod.GET,
+                    getHeaders(authToken),
+                    new ParameterizedTypeReference<List<LocationRefData>>() {
+                    }
             );
             List<LocationRefData> ccmccLocations = responseEntity.getBody();
             if (ccmccLocations == null || ccmccLocations.isEmpty()) {
@@ -57,11 +57,11 @@ public class LocationRefDataService {
     public List<LocationRefData> getCourtLocationsForDefaultJudgments(String authToken) {
         try {
             ResponseEntity<List<LocationRefData>> responseEntity = restTemplate.exchange(
-                buildURIForDefaultJudgments(),
-                HttpMethod.GET,
-                getHeaders(authToken),
-                new ParameterizedTypeReference<>() {
-                }
+                    buildURIForDefaultJudgments(),
+                    HttpMethod.GET,
+                    getHeaders(authToken),
+                    new ParameterizedTypeReference<>() {
+                    }
             );
             return responseEntity.getBody();
         } catch (Exception e) {
@@ -73,14 +73,14 @@ public class LocationRefDataService {
     public List<LocationRefData> getCourtLocationsForGeneralApplication(String authToken) {
         try {
             ResponseEntity<List<LocationRefData>> responseEntity = restTemplate.exchange(
-                buildURI(),
-                HttpMethod.GET,
-                getHeaders(authToken),
-                new ParameterizedTypeReference<>() {
-                }
+                    buildURI(),
+                    HttpMethod.GET,
+                    getHeaders(authToken),
+                    new ParameterizedTypeReference<>() {
+                    }
             );
             return onlyEnglandAndWalesLocations(responseEntity.getBody())
-                .stream().sorted(Comparator.comparing(LocationRefData::getSiteName)).collect(Collectors.toList());
+                    .stream().sorted(Comparator.comparing(LocationRefData::getSiteName)).collect(Collectors.toList());
         } catch (Exception e) {
             log.error("Location Reference Data Lookup Failed - " + e.getMessage(), e);
         }
@@ -90,11 +90,11 @@ public class LocationRefDataService {
     public List<LocationRefData> getCourtLocationsByEpimmsId(String authToken, String epimmsId) {
         try {
             ResponseEntity<List<LocationRefData>> responseEntity = restTemplate.exchange(
-                buildURIforCourtLocation(epimmsId),
-                HttpMethod.GET,
-                getHeaders(authToken),
-                new ParameterizedTypeReference<>() {
-                }
+                    buildURIforCourtLocation(epimmsId),
+                    HttpMethod.GET,
+                    getHeaders(authToken),
+                    new ParameterizedTypeReference<>() {
+                    }
             );
             return responseEntity.getBody();
         } catch (Exception e) {
@@ -106,34 +106,34 @@ public class LocationRefDataService {
     private URI buildURI() {
         String queryURL = lrdConfiguration.getUrl() + lrdConfiguration.getEndpoint();
         UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(queryURL)
-            .queryParam("is_hearing_location", "Y")
-            .queryParam("is_case_management_location", "Y")
-            .queryParam("court_type_id", "10")
-            .queryParam("location_type", "Court");
+                .queryParam("is_hearing_location", "Y")
+                .queryParam("is_case_management_location", "Y")
+                .queryParam("court_type_id", "10")
+                .queryParam("location_type", "Court");
         return builder.buildAndExpand(new HashMap<>()).toUri();
     }
 
     private URI buildURIforCcmcc() {
         String queryURL = lrdConfiguration.getUrl() + lrdConfiguration.getEndpoint();
         UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(queryURL)
-            .queryParam("court_venue_name", "County Court Money Claims Centre");
+                .queryParam("court_venue_name", "County Court Money Claims Centre");
         return builder.buildAndExpand(new HashMap<>()).toUri();
     }
 
     private URI buildURIForDefaultJudgments() {
         String queryURL = lrdConfiguration.getUrl() + lrdConfiguration.getEndpoint();
         UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(queryURL)
-            .queryParam("is_hearing_location", "Y")
-            .queryParam("is_case_management_location", "Y")
-            .queryParam("court_type_id", "10")
-            .queryParam("location_type", "Court");
+                .queryParam("is_hearing_location", "Y")
+                .queryParam("is_case_management_location", "Y")
+                .queryParam("court_type_id", "10")
+                .queryParam("location_type", "Court");
         return builder.buildAndExpand(new HashMap<>()).toUri();
     }
 
     private URI buildURIforCourtLocation(String epimmsId) {
         String queryURL = lrdConfiguration.getUrl() + lrdConfiguration.getEndpoint();
         UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(queryURL)
-            .queryParam("epimms_id", epimmsId);
+                .queryParam("epimms_id", epimmsId);
         return builder.buildAndExpand(new HashMap<>()).toUri();
     }
 
@@ -146,9 +146,9 @@ public class LocationRefDataService {
 
     private List<LocationRefData> onlyEnglandAndWalesLocations(List<LocationRefData> locationRefData) {
         return locationRefData == null
-            ? new ArrayList<>()
-            : locationRefData.stream().filter(location -> !"Scotland".equals(location.getRegion()))
-            .collect(Collectors.toList());
+                ? new ArrayList<>()
+                : locationRefData.stream().filter(location -> !"Scotland".equals(location.getRegion()))
+                .collect(Collectors.toList());
     }
 
     public Optional<LocationRefData> getLocationMatchingLabel(String label, String bearerToken) {
@@ -158,8 +158,8 @@ public class LocationRefDataService {
 
         List<LocationRefData> locations = getCourtLocationsForDefaultJudgments(bearerToken);
         return locations.stream().filter(loc -> LocationRefDataService.getDisplayEntry(loc)
-                .equals(label))
-            .findFirst();
+                        .equals(label))
+                .findFirst();
     }
 
     /**
@@ -170,19 +170,19 @@ public class LocationRefDataService {
      */
     public static String getDisplayEntry(LocationRefData location) {
         return concat(
-            concat(concat(location.getSiteName(), " - "), concat(location.getCourtAddress(), " - ")),
-            location.getPostcode()
+                concat(concat(location.getSiteName(), " - "), concat(location.getCourtAddress(), " - ")),
+                location.getPostcode()
         );
     }
 
     public LocationRefData getCourtLocation(String authToken, String threeDigitCode) {
         try {
             ResponseEntity<List<LocationRefData>> responseEntity = restTemplate.exchange(
-                buildURIforCourtCode(threeDigitCode),
-                HttpMethod.GET,
-                getHeaders(authToken),
-                new ParameterizedTypeReference<List<LocationRefData>>() {
-                }
+                    buildURIforCourtCode(threeDigitCode),
+                    HttpMethod.GET,
+                    getHeaders(authToken),
+                    new ParameterizedTypeReference<List<LocationRefData>>() {
+                    }
             );
             List<LocationRefData> locations = responseEntity.getBody();
             if (locations == null || locations.isEmpty()) {
@@ -201,18 +201,18 @@ public class LocationRefDataService {
     private URI buildURIforCourtCode(String courtCode) {
         String queryURL = lrdConfiguration.getUrl() + lrdConfiguration.getEndpoint();
         UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(queryURL)
-            .queryParam("court_type_id", "10")
-            .queryParam("is_case_management_location", "Y")
-            .queryParam("court_location_code", courtCode)
-            .queryParam("court_status", "Open");
+                .queryParam("court_type_id", "10")
+                .queryParam("is_case_management_location", "Y")
+                .queryParam("court_location_code", courtCode)
+                .queryParam("court_status", "Open");
 
         return builder.buildAndExpand(new HashMap<>()).toUri();
     }
 
     private LocationRefData filterCourtLocation(List<LocationRefData> locations, String courtCode) {
         List<LocationRefData> filteredLocations = locations.stream().filter(location -> location.getCourtLocationCode()
-                .equals(courtCode))
-            .collect(Collectors.toList());
+                        .equals(courtCode))
+                .collect(Collectors.toList());
         if (filteredLocations.isEmpty()) {
             log.warn("No court Location Found for three digit court code : {}", courtCode);
             throw new LocationRefDataException("No court Location Found for three digit court code : " + courtCode);

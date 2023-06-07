@@ -27,18 +27,18 @@ public class JudicialRefDataService {
 
     public List<JudgeRefData> getJudgeReferenceData(String searchString, String authToken) {
         JudgeSearchRequest jsr = JudgeSearchRequest.builder()
-            .searchString(searchString)
-            .build();
+                .searchString(searchString)
+                .build();
 
         HttpEntity<JudgeSearchRequest> request = new HttpEntity<>(jsr, getHeaders(authToken));
 
         try {
             ResponseEntity<List<JudgeRefData>> responseEntity = restTemplate.exchange(
-                buildURI(),
-                HttpMethod.POST,
-                request,
-                new ParameterizedTypeReference<List<JudgeRefData>>() {
-                }
+                    buildURI(),
+                    HttpMethod.POST,
+                    request,
+                    new ParameterizedTypeReference<List<JudgeRefData>>() {
+                    }
             );
 
             return responseEntity.getBody();

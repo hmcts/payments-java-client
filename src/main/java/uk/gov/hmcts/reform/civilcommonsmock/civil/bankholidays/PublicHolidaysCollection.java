@@ -25,8 +25,8 @@ public class PublicHolidaysCollection {
         BankHolidays bankHolidays = bankHolidaysApi.retrieveAll();
 
         return bankHolidays.englandAndWales.events.stream()
-            .map(item -> item.date)
-            .collect(Collectors.toSet());
+                .map(item -> item.date)
+                .collect(Collectors.toSet());
     }
 
     public Set<LocalDate> getPublicHolidays() {

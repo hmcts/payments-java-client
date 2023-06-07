@@ -27,14 +27,14 @@ public class ValidateEmailService {
     private static final int USERNAME_MAX_LENGTH = 64;
 
     private static final String ERROR_MESSAGE = "Enter an email address in the correct format,"
-        + " for example john.smith@example.com";
+            + " for example john.smith@example.com";
     private static final String LOCAL_CHARS = "a-zA-Z0-9.!#$%&'*+/=?^_`{|}~\\-";
     private static final Pattern HOSTNAME_PATTERN = compile(format(
-        "^(xn-|[a-z0-9]{1,%1$d})(-[a-z0-9]{1,%1$d}){0,%1$d}$", HOST_PART_MAX_LENGTH), CASE_INSENSITIVE);
+            "^(xn-|[a-z0-9]{1,%1$d})(-[a-z0-9]{1,%1$d}){0,%1$d}$", HOST_PART_MAX_LENGTH), CASE_INSENSITIVE);
     private static final Pattern TLD_PATTERN = compile(format(
-        "^([a-z]{2,%1$d}|xn--([a-z0-9]{1,%1$d}-){0,%1$d}[a-z0-9]{1,%1$d})$", HOST_PART_MAX_LENGTH), CASE_INSENSITIVE);
+            "^([a-z]{2,%1$d}|xn--([a-z0-9]{1,%1$d}-){0,%1$d}[a-z0-9]{1,%1$d})$", HOST_PART_MAX_LENGTH), CASE_INSENSITIVE);
     private static final Pattern EMAIL_PATTERN = compile(format(
-        "^[%s]{1,%2$d}@([^.@][^@\\s]{2,%2$d})$", LOCAL_CHARS, EMAIL_MAX_LENGTH));
+            "^[%s]{1,%2$d}@([^.@][^@\\s]{2,%2$d})$", LOCAL_CHARS, EMAIL_MAX_LENGTH));
 
     public List<String> validate(String email) {
         return isValid(email) ? emptyList() : List.of(ERROR_MESSAGE);

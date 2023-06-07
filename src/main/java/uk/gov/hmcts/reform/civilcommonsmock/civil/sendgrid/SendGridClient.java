@@ -37,8 +37,8 @@ public class SendGridClient {
             Content content = new Content(TEXT_PLAIN_VALUE, getMessage(emailData));
             Mail mail = new Mail(sender, subject, recipient, content);
             emailData.getAttachments().stream()
-                .map(SendGridClient::toSendGridAttachments)
-                .forEach(mail::addAttachments);
+                    .map(SendGridClient::toSendGridAttachments)
+                    .forEach(mail::addAttachments);
 
             Request request = new Request();
             request.setMethod(Method.POST);
@@ -49,9 +49,9 @@ public class SendGridClient {
             if (!is2xxSuccessful(response)) {
                 log.error("EMAIl SEND FAILED:---------" + subject);
                 throw new EmailSendFailedException(new HttpException(String.format(
-                    "SendGrid returned a non-success response (%d); body: %s",
-                    response.getStatusCode(),
-                    response.getBody()
+                        "SendGrid returned a non-success response (%d); body: %s",
+                        response.getStatusCode(),
+                        response.getBody()
                 )));
             }
             log.info("EMAIl SENT:---------" + subject);
@@ -67,13 +67,13 @@ public class SendGridClient {
     @SuppressWarnings("unused") // it's a recovery handler and will not have explicit call
     @Recover
     public void logSendMessageWithAttachmentFailure(
-        EmailSendFailedException exception,
-        String from,
-        EmailData emailData
+            EmailSendFailedException exception,
+            String from,
+            EmailData emailData
     ) {
         String errorMessage = String.format(
-            "sendEmail failure:  failed to send email with details: %s due to %s",
-            emailData.toString(), exception.getMessage()
+                "sendEmail failure:  failed to send email with details: %s due to %s",
+                emailData.toString(), exception.getMessage()
         );
         log.error(errorMessage, exception);
     }
@@ -90,13 +90,13 @@ public class SendGridClient {
     private static Attachments toSendGridAttachments(EmailAttachment attachment) {
         try {
             return new Attachments.Builder(attachment.getFilename(), attachment.getData().getInputStream())
-                .withType(attachment.getContentType())
-                .withDisposition("attachment")
-                .build();
+                    .withType(attachment.getContentType())
+                    .withDisposition("attachment")
+                    .build();
         } catch (IOException ioException) {
             throw new EmailSendFailedException(
-                "Could not open input stream for attachment " + attachment.getFilename(),
-                ioException
+                    "Could not open input stream for attachment " + attachment.getFilename(),
+                    ioException
             );
         }
     }

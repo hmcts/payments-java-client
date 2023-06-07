@@ -19,10 +19,10 @@ public class EmailData {
 
     @Builder
     public EmailData(
-        String to,
-        String subject,
-        String message,
-        List<EmailAttachment> attachments
+            String to,
+            String subject,
+            String message,
+            List<EmailAttachment> attachments
     ) {
         this.to = to;
         this.subject = subject;

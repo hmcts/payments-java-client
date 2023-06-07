@@ -17,13 +17,13 @@ public interface RoleAssignmentsApi {
     String ACTOR_ID = "actorId";
 
     @GetMapping(
-        value = "/am/role-assignments/actors/{actorId}",
-        consumes = APPLICATION_JSON_VALUE,
-        headers = CONTENT_TYPE + "=" + APPLICATION_JSON_VALUE
+            value = "/am/role-assignments/actors/{actorId}",
+            consumes = APPLICATION_JSON_VALUE,
+            headers = CONTENT_TYPE + "=" + APPLICATION_JSON_VALUE
     )
     RoleAssignmentServiceResponse getRoleAssignments(
-        @RequestHeader(AUTHORIZATION) String authorization,
-        @RequestHeader(SERVICE_AUTHORIZATION) String serviceAuthorization,
-        @PathVariable(ACTOR_ID) String actorId);
+            @RequestHeader(AUTHORIZATION) String authorization,
+            @RequestHeader(SERVICE_AUTHORIZATION) String serviceAuthorization,
+            @PathVariable(ACTOR_ID) String actorId);
 
 }

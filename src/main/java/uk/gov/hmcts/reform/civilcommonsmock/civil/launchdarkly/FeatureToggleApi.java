@@ -41,8 +41,8 @@ public class FeatureToggleApi {
 
     public LDUser.Builder createLDUser() {
         return new LDUser.Builder("civil-service")
-            .custom("timestamp", String.valueOf(System.currentTimeMillis()))
-            .custom("environment", environment);
+                .custom("timestamp", String.valueOf(System.currentTimeMillis()))
+                .custom("environment", environment);
     }
 
     private void close() {

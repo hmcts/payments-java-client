@@ -15,9 +15,9 @@ public interface ListOfValuesApi {
 
     @GetMapping("/refdata/commondata/lov/categories/{category-id}")
     CategorySearchResult findCategoryByCategoryIdAndServiceId(
-        @PathVariable("category-id") String categoryId,
-        @RequestParam("serviceId") String serviceId,
-        @RequestHeader(AUTHORIZATION) String authorization,
-        @RequestHeader(SERVICE_AUTHORIZATION) String serviceAuthorization
+            @PathVariable("category-id") String categoryId,
+            @RequestParam("serviceId") String serviceId,
+            @RequestHeader(AUTHORIZATION) String authorization,
+            @RequestHeader(SERVICE_AUTHORIZATION) String serviceAuthorization
     );
 }

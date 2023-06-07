@@ -33,8 +33,8 @@ public class PostcodeLookupService {
     public boolean validatePostCodeForDefendant(String postcode) {
         String countryName = fetchCountryFromPostCode(postcode.toUpperCase(Locale.UK));
         return (countryName != null
-            && (CountriesAllowed.ENGLAND.name().equals(countryName.toUpperCase(Locale.UK))
-            || CountriesAllowed.WALES.name().equals(countryName.toUpperCase(Locale.UK))));
+                && (CountriesAllowed.ENGLAND.name().equals(countryName.toUpperCase(Locale.UK))
+                || CountriesAllowed.WALES.name().equals(countryName.toUpperCase(Locale.UK))));
     }
 
     private String fetchCountryFromPostCode(String postcode) {
@@ -65,10 +65,10 @@ public class PostcodeLookupService {
             headers.set("Accept", "application/json");
 
             response = restTemplate.exchange(
-                builder.toUriString(),
-                HttpMethod.GET,
-                new HttpEntity(headers),
-                String.class
+                    builder.toUriString(),
+                    HttpMethod.GET,
+                    new HttpEntity(headers),
+                    String.class
             );
 
             HttpStatus responseStatus = ((ResponseEntity) response).getStatusCode();
@@ -78,7 +78,7 @@ public class PostcodeLookupService {
 
                 if (jsonObj.has("results")) {
                     JSONObject gazeteerEntry = new JSONObject(new JSONObject(((JSONArray) jsonObj
-                        .get("results")).get(0).toString()).get("GAZETTEER_ENTRY").toString());
+                            .get("results")).get(0).toString()).get("GAZETTEER_ENTRY").toString());
                     postcodeFromApilookup = StringUtils.deleteWhitespace(gazeteerEntry.get("NAME1").toString());
                     if (postcodeFromApilookup.equals(StringUtils.deleteWhitespace(postcode))) {
                         countryName = gazeteerEntry.get("COUNTRY").toString();

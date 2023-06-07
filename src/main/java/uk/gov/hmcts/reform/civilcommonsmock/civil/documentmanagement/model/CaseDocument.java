@@ -22,10 +22,10 @@ public class CaseDocument {
     @JsonIgnore
     public static CaseDocument toCaseDocument(Document document, DocumentType documentType) {
         return CaseDocument.builder()
-            .documentLink(document)
-            .documentName(document.documentFileName)
-            .documentType(documentType)
-            .createdDatetime(LocalDateTime.now())
-            .build();
+                .documentLink(document)
+                .documentName(document.documentFileName)
+                .documentType(documentType)
+                .createdDatetime(LocalDateTime.now())
+                .build();
     }
 }

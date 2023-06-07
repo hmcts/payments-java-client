@@ -1,6 +1,6 @@
 package uk.gov.hmcts.reform.civilcommonsmock.civil.referencedata;
 
-public class LocationRefDataException  extends RuntimeException {
+public class LocationRefDataException extends RuntimeException {
 
     public LocationRefDataException(String message) {
         super(message);

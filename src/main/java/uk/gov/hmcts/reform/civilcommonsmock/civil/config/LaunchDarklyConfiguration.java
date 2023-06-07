@@ -35,8 +35,8 @@ public class LaunchDarklyConfiguration {
                              @Value("${launchdarkly.file:''}") String[] flagFiles) {
         LDConfig.Builder builder = new LDConfig.Builder().offline(offlineMode);
         getExistingFiles(flagFiles)
-            .map(this::getDataSource)
-            .ifPresent(builder::dataSource);
+                .map(this::getDataSource)
+                .ifPresent(builder::dataSource);
         return new LDClient(sdkKey, builder.build());
     }
 
@@ -45,12 +45,12 @@ public class LaunchDarklyConfiguration {
      *
      * @param flagFilePaths an array of files that exist and that have to be used to create the launch darkly flags
      * @return a datasource able to combine the contents of all the files. If there are duplicated keys, the values
-     *     on the first file have precedence
+     * on the first file have precedence
      */
     private DataSourceFactory getDataSource(Path[] flagFilePaths) {
         return FileData.dataSource()
-            .filePaths(flagFilePaths)
-            .duplicateKeysHandling(FileData.DuplicateKeysHandling.IGNORE);
+                .filePaths(flagFilePaths)
+                .duplicateKeysHandling(FileData.DuplicateKeysHandling.IGNORE);
     }
 
     /**
@@ -59,16 +59,16 @@ public class LaunchDarklyConfiguration {
      * @param files an array of strings describing files. Each starts with / if absolute.
      *              Otherwise, it's considered relative to the working directory.
      * @return an Optional containing those files describes which actually exist. Empty if files is null,
-     *     empty or if none can be found.
+     * empty or if none can be found.
      */
     private Optional<Path[]> getExistingFiles(String[] files) {
         if (files == null || files.length < 1) {
             return Optional.empty();
         } else {
             Path[] existing = Stream.of(files).map(this::getPathIfExists)
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .toArray(Path[]::new);
+                    .filter(Optional::isPresent)
+                    .map(Optional::get)
+                    .toArray(Path[]::new);
             if (existing.length > 0) {
                 return Optional.of(existing);
             } else {
@@ -82,7 +82,7 @@ public class LaunchDarklyConfiguration {
      *
      * @param file a string describing a file. Start with / if absolute path.
      * @return if it exists the described file, an Optional containing the path.
-     *     An empty Optional otherwise.
+     * An empty Optional otherwise.
      */
     private Optional<Path> getPathIfExists(String file) {
         if (StringUtils.isNotBlank(file)) {
