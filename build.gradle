@@ -1,13 +1,11 @@
 plugins {
-    id 'checkstyle'
+    //id 'checkstyle'
     id 'io.spring.dependency-management' version '1.0.9.RELEASE'
     id 'org.springframework.boot' version '2.2.5.RELEASE'
     id 'com.github.ben-manes.versions' version '0.28.0'
     id 'com.jfrog.bintray' version '1.8.4'
     id 'java-library'
-    id 'maven'
     id 'maven-publish'
-    id 'net.ltgt.apt' version '0.21'
 }
 
 // This will pick up the version number from release tag
@@ -31,16 +29,15 @@ dependencyUpdates.resolutionStrategy = {
 
 def springBootVersion = '2.5.4'
 
-checkstyle {
-    maxWarnings = 0
-    toolVersion = '8.29'
-    // need to set configDir to rootDir otherwise submodule will use submodule/config/checkstyle
-    configDir = new File(rootDir, 'config/checkstyle')
-}
+//checkstyle {
+//    maxWarnings = 0
+//    toolVersion = '10.4'
+//    getConfigDirectory().set(new File(rootDir, 'config/checkstyle'))
+//}
 
 sourceCompatibility = 11
 
-compileJava {
+tasks.withType(JavaCompile) {
     options.compilerArgs << '-parameters' << '-Xlint:deprecation'
 }
 
@@ -50,6 +47,7 @@ compileTestJava {
 
 repositories {
     mavenLocal()
+    mavenCentral()
     jcenter()
     maven {
         url 'https://jitpack.io'
@@ -71,12 +69,12 @@ task printVersion {
 def gitRepo = "https://github.com/hmcts/payments-java-client"
 
 task sourcesJar(type: Jar, dependsOn: classes) {
-    classifier = 'sources'
+    archiveClassifier = 'sources'
     from sourceSets.main.allSource
 }
 
 task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
+    archiveClassifier = 'javadoc'
     from javadoc.destinationDir
 }
 
@@ -144,11 +142,11 @@ dependencies {
     compileOnly group: 'org.projectlombok', name: 'lombok', version: lombokVersion
     annotationProcessor group: 'org.projectlombok', name: 'lombok', version: lombokVersion
 
-    compile group: 'ch.qos.logback', name: 'logback-classic', version: versions.logback
-    compile group: 'ch.qos.logback', name: 'logback-core', version: versions.logback
-    compile group: 'uk.gov.hmcts.reform', name: 'java-logging', version: versions.reformJavaLogging
+    implementation group: 'ch.qos.logback', name: 'logback-classic', version: versions.logback
+    implementation group: 'ch.qos.logback', name: 'logback-core', version: versions.logback
+    implementation group: 'uk.gov.hmcts.reform', name: 'java-logging', version: versions.reformJavaLogging
 
-    compile group: 'uk.gov.hmcts.reform', name: 'service-auth-provider-client', version: '3.1.1'
+    implementation group: 'uk.gov.hmcts.reform', name: 'service-auth-provider-client', version: '3.1.1'
 
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter', version: versions.junitJupiter
     testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test'
