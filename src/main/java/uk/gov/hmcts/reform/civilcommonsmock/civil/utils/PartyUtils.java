@@ -358,8 +358,8 @@ public class PartyUtils {
     }
 
     @SuppressWarnings("unchecked")
-    public static void populateWithPartyIds(CaseData.CaseDataBuilder builder) {
-        CaseData caseData = builder.build();
+    public static void populateWithPartyIds(CaseData caseData) {
+        CaseData.CaseDataBuilder<?, ?> builder = caseData.toBuilder();
         builder
                 .applicant1(appendWithNewPartyId(caseData.getApplicant1()))
                 .applicant2(appendWithNewPartyId(caseData.getApplicant2()))
