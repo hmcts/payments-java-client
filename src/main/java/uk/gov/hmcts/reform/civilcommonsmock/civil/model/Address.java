@@ -14,7 +14,7 @@ import static uk.gov.hmcts.reform.civilcommonsmock.civil.utils.StringUtils.joinN
 
 @Data
 @Builder(toBuilder = true)
-@JsonNaming(PropertyNamingStrategy.UpperCamelCaseStrategy.class)
+//@JsonNaming(PropertyNamingStrategy.UpperCamelCaseStrategy.class)
 @NoArgsConstructor
 @AllArgsConstructor
 public class Address {
