@@ -1,0 +1,21 @@
+package uk.gov.hmcts.reform.civil.validation.interfaces;
+
+import uk.gov.hmcts.reform.civil.validation.UnavailableDateValidator;
+
+import javax.validation.Constraint;
+import javax.validation.Payload;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+@Constraint(validatedBy = UnavailableDateValidator.class)
+public @interface IsPresentOrEqualToOrLessThanOneYearInTheFuture {
+    String message() default "The date cannot be in the past and must not be more than a year in the future";
+
+    Class<?>[] groups() default {};
+
+    Class<? extends Payload>[] payload() default {};
+}
