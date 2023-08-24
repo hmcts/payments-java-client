@@ -99,7 +99,7 @@ def versions = [
         logback          : '1.2.3',
         springBoot       : springBootVersion,
         reformJavaLogging: '5.0.1',
-        junitJupiter     : '5.5.2'
+        junitJupiter     : '5.10.0'
 ]
 
 dependencyManagement {
