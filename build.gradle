@@ -148,7 +148,7 @@ dependencies {
     compile group: 'ch.qos.logback', name: 'logback-core', version: versions.logback
     compile group: 'uk.gov.hmcts.reform', name: 'java-logging', version: versions.reformJavaLogging
 
-    compile group: 'uk.gov.hmcts.reform', name: 'service-auth-provider-client', version: '3.1.4'
+    compile group: 'uk.gov.hmcts.reform', name: 'service-auth-provider-client', version: '4.0.0'
 
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter', version: versions.junitJupiter
     testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test'
@@ -159,7 +159,7 @@ dependencies {
     testImplementation group: 'com.github.tomakehurst', name: 'wiremock', version: '2.33.2'
     testImplementation group: 'org.springframework.cloud', name: 'spring-cloud-contract-wiremock'
 
-    functionalTestImplementation group: 'uk.gov.hmcts.reform', name: 'service-auth-provider-client', version: '3.1.4'
+    functionalTestImplementation group: 'uk.gov.hmcts.reform', name: 'service-auth-provider-client', version: '4.0.0'
     functionalTestCompileOnly group: 'org.projectlombok', name: 'lombok', version: lombokVersion
     functionalTestAnnotationProcessor group: 'org.projectlombok', name: 'lombok', version: lombokVersion
 }
