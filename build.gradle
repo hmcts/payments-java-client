@@ -146,7 +146,7 @@ dependencies {
 
     compile group: 'ch.qos.logback', name: 'logback-classic', version: versions.logback
     compile group: 'ch.qos.logback', name: 'logback-core', version: versions.logback
-    compile group: 'uk.gov.hmcts.reform', name: 'java-logging', version: versions.reformJavaLogging
+    compile group: 'com.github.hmcts', name: 'java-logging', version: versions.reformJavaLogging
 
     compile group: 'uk.gov.hmcts.reform', name: 'service-auth-provider-client', version: '4.0.0'
 
