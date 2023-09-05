@@ -98,7 +98,7 @@ ext {
 def versions = [
         logback          : '1.2.3',
         springBoot       : springBootVersion,
-        reformJavaLogging: '5.0.1',
+        reformJavaLogging: '6.0.1',
         junitJupiter     : '5.10.0'
 ]
 
