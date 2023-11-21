@@ -54,9 +54,9 @@ public interface PaymentsApi {
             @RequestHeader("ServiceAuthorization") String serviceAuthorization
     );
 
-    @GetMapping(value = "/card-payments/{internal-reference}/status")
+    @GetMapping(value = "/payments/{payment-reference}")
     PaymentDto getCardPaymentStatus(
-            @PathVariable("internal-reference") String internalReference,
+            @PathVariable("payment-reference") String paymentReference,
             @RequestHeader("Authorization") String authorization,
             @RequestHeader("ServiceAuthorization") String serviceAuthorization
     );
