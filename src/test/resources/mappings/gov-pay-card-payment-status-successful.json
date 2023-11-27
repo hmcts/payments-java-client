@@ -1,0 +1,24 @@
+{
+  "id" : "f4db6fd2-dea4-4a3a-80df-643b2cf1344d",
+  "name" : "card-payments_rc-1701-0909-0602-0418",
+  "request" : {
+    "url" : "/payments/RC-1701-0909-0602-0418",
+    "method" : "GET"
+  },
+  "response" : {
+    "status" : 200,
+    "body" : "{\n    \"amount\": 232.00,\n    \"date_created\": \"2023-11-27T13:15:06.313+0000\",\n    \"date_updated\": \"2023-11-27T13:19:28.761+0000\",\n    \"currency\": \"GBP\",\n    \"ccd_case_number\": \"1701090368574910\",\n    \"case_reference\": \"123456\",\n    \"payment_reference\": \"RC-1701-0909-0602-0418\",\n    \"channel\": \"online\",\n    \"method\": \"card\",\n    \"external_provider\": \"gov pay\",\n    \"status\": \"Success\",\n    \"external_reference\": \"lbh2ogknloh9p3b4lchngdfg63\",\n    \"site_id\": \"ABA5\",\n    \"service_name\": \"Family Private Law\",\n    \"payment_group_reference\": \"2023-1701090705688\",\n    \"issue_refund_add_refund_add_remission\": false,\n    \"issue_refund\": false,\n    \"fees\": [\n        {\n            \"id\": 2729098,\n            \"code\": \"FEE0336\",\n            \"version\": \"2\",\n            \"volume\": 1,\n            \"calculated_amount\": 232.00,\n            \"memo_line\": \"RECEIPT OF FEES - Family misc private\",\n            \"natural_account_code\": \"4481102174\",\n            \"ccd_case_number\": \"1701090368574910\",\n            \"jurisdiction1\": \"family\",\n            \"jurisdiction2\": \"family court\",\n            \"date_created\": \"2023-11-27T13:11:45.623+00:00\",\n            \"date_updated\": \"2023-11-27T13:19:28.765+00:00\",\n            \"issue_refund_add_refund_add_remission\": false,\n            \"add_remission\": false\n        }\n    ],\n    \"status_histories\": [\n        {\n            \"status\": \"Initiated\",\n            \"external_status\": \"created\",\n            \"date_created\": \"2023-11-27T13:15:06.319+0000\"\n        },\n        {\n            \"status\": \"Success\",\n            \"external_status\": \"success\",\n            \"date_created\": \"2023-11-27T13:19:28.759+0000\"\n        }\n    ],\n    \"payment_allocation\": []\n}",
+    "headers" : {
+      "X-Content-Type-Options" : "nosniff",
+      "X-XSS-Protection" : "1; mode=block",
+      "Cache-Control" : "no-cache, no-store, max-age=0, must-revalidate",
+      "Pragma" : "no-cache",
+      "Expires" : "0",
+      "X-Frame-Options" : "DENY",
+      "Content-Type" : "application/json;charset=UTF-8",
+      "Date" : "Mon, 19 Aug 2019 10:09:15 GMT"
+    }
+  },
+  "uuid" : "f4db6fd2-dea4-4a3a-80df-643b2cf1344d",
+  "persistent" : true
+}

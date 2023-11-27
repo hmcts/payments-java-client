@@ -15,7 +15,9 @@ import uk.gov.hmcts.reform.authorisation.generators.AuthTokenGenerator;
 import uk.gov.hmcts.reform.payments.client.models.FeeDto;
 import uk.gov.hmcts.reform.payments.client.models.PaymentDto;
 import uk.gov.hmcts.reform.payments.request.CardPaymentRequest;
+import uk.gov.hmcts.reform.payments.request.CardPaymentServiceRequestDTO;
 import uk.gov.hmcts.reform.payments.request.CreditAccountPaymentRequest;
+import uk.gov.hmcts.reform.payments.response.CardPaymentServiceRequestResponse;
 
 import java.math.BigDecimal;
 import java.util.Map;
@@ -117,6 +119,28 @@ class PaymentsClientWiremockTest {
     }
 
     @Test
+    void testCreateGovPayCardPaymentRequest() {
+        CardPaymentServiceRequestResponse payment = paymentsClient.createGovPayCardPaymentRequest(
+                "2023-1701090705688",
+                "Authorisation",
+                CardPaymentServiceRequestDTO.builder()
+                        .returnUrl("return-url")
+                        .language("English")
+                        .amount(new BigDecimal("232.00"))
+                        .currency("GBP")
+                        .build()
+        );
+        assertNotNull(payment);
+        assertAll(
+            () -> assertEquals("RC-1701-0909-0602-0418", payment.getPaymentReference()),
+            () -> assertEquals("lbh2ogknloh9p3b4lchngdfg63", payment.getExternalReference()),
+            () -> assertEquals("Initiated", payment.getStatus()),
+            () -> assertEquals("https://card.payments.service.gov.uk/secure/7b0716b2-40c4-413e-b62e-72c599c91960",
+                    payment.getNextUrl())
+        );
+    }
+
+    @Test
     void testRetrieveCardPayment() {
         PaymentDto payment = paymentsClient.retrieveCardPayment("Authorisation", "RC-1566-2093-5462-0545");
         assertNotNull(payment);
@@ -135,6 +159,45 @@ class PaymentsClientWiremockTest {
                         payment.getLinks().getSelf().getHref().toString()
                 ),
                 () -> assertEquals(RequestMethod.GET, payment.getLinks().getSelf().getMethod())
+            )
+        );
+    }
+
+    @Test
+    void testRetrieveCardPaymentStatus() {
+        PaymentDto payment = paymentsClient.getGovPayCardPaymentStatus("RC-1701-0909-0602-0418", "Authorisation");
+        assertNotNull(payment);
+        assertAll(
+            () -> assertEquals("RC-1701-0909-0602-0418", payment.getPaymentReference()),
+            () -> assertEquals(new BigDecimal("232.00"), payment.getAmount()),
+            () -> assertEquals("GBP", payment.getCurrency()),
+            () -> assertEquals("online", payment.getChannel()),
+            () -> assertEquals("card", payment.getMethod()),
+            () -> assertEquals("gov pay", payment.getExternalProvider()),
+            () -> assertEquals("Success", payment.getStatus()),
+            () -> assertEquals("lbh2ogknloh9p3b4lchngdfg63", payment.getExternalReference()),
+            () -> assertEquals("2023-1701090705688", payment.getPaymentGroupReference()),
+            () -> assertNotNull(payment.getFees()),
+            () -> assertAll(
+                () -> assertEquals(
+                        "FEE0336",
+                        payment.getFees()[0].getCode()
+                ),
+                () -> assertEquals(
+                        new BigDecimal("232.00"),
+                        payment.getFees()[0].getCalculatedAmount()
+                )
+            ),
+            () -> assertNotNull(payment.getStatusHistories()),
+            () -> assertAll(
+                () -> assertEquals(
+                        "Initiated",
+                        payment.getStatusHistories()[0].getStatus()
+                ),
+                () -> assertEquals(
+                        "Success",
+                        payment.getStatusHistories()[1].getStatus()
+                )
             )
         );
     }

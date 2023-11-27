@@ -1,0 +1,31 @@
+{
+  "id": "603a01d7-0c0b-494d-ba4c-0d7165238522",
+  "name": "gov-pay-card-payments",
+  "request": {
+    "url": "/service-request/2023-1701090705688/card-payments",
+    "method": "POST",
+    "bodyPatterns": [
+      {
+        "equalToJson": "{\n  \"return-url\" : \"return-url\",\n  \"language\" : \"English\",\n \"currency\" : \"GBP\",\n \"amount\" : 232.00\n}",
+        "ignoreArrayOrder": true,
+        "ignoreExtraElements": true
+      }
+    ]
+  },
+  "response": {
+    "status": 201,
+    "body": "{\n    \"payment_reference\": \"RC-1701-0909-0602-0418\",\n    \"external_reference\": \"lbh2ogknloh9p3b4lchngdfg63\",\n    \"status\": \"Initiated\",\n    \"next_url\": \"https://card.payments.service.gov.uk/secure/7b0716b2-40c4-413e-b62e-72c599c91960\",\n    \"date_created\": \"2023-11-27T13:15:06.313+00:00\"\n}",
+    "headers": {
+      "X-Content-Type-Options": "nosniff",
+      "X-XSS-Protection": "1; mode=block",
+      "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
+      "Pragma": "no-cache",
+      "Expires": "0",
+      "X-Frame-Options": "DENY",
+      "Content-Type": "application/json;charset=UTF-8",
+      "Date": "Mon, 19 Aug 2019 09:46:54 GMT"
+    }
+  },
+  "uuid": "603a01d7-0c0b-494d-ba4c-0d7165238522",
+  "persistent": true
+}

@@ -16,7 +16,6 @@ import uk.gov.hmcts.reform.payments.request.CreditAccountPaymentRequest;
 import uk.gov.hmcts.reform.payments.request.PBAServiceRequestDTO;
 import uk.gov.hmcts.reform.payments.response.CardPaymentServiceRequestResponse;
 import uk.gov.hmcts.reform.payments.response.PBAServiceRequestResponse;
-import uk.gov.hmcts.reform.payments.response.PaymentGroupResponse;
 import uk.gov.hmcts.reform.payments.response.PaymentServiceResponse;
 
 @FeignClient(name = "payments-api", url = "${payments.api.url}", configuration = PaymentClientConfiguration.class)
@@ -55,7 +54,7 @@ public interface PaymentsApi {
     );
 
     @GetMapping(value = "/payments/{payment-reference}")
-    PaymentDto getCardPaymentStatus(
+    PaymentDto getGovPayCardPaymentStatus(
             @PathVariable("payment-reference") String paymentReference,
             @RequestHeader("Authorization") String authorization,
             @RequestHeader("ServiceAuthorization") String serviceAuthorization
@@ -77,18 +76,10 @@ public interface PaymentsApi {
     );
 
     @PostMapping(value = "/service-request/{service-request-reference}/card-payments", consumes = "application/json")
-    CardPaymentServiceRequestResponse createCardPaymentServiceRequest(
+    CardPaymentServiceRequestResponse createGovPayCardPaymentRequest(
             @PathVariable("service-request-reference") String serviceReqReference,
             @RequestHeader("Authorization") String authorization,
             @RequestHeader("ServiceAuthorization") String serviceAuthorization,
             @RequestBody CardPaymentServiceRequestDTO paymentRequest
     );
-
-    @GetMapping(value = "cases/{ccd-case-number}/paymentgroups")
-    PaymentGroupResponse getCasePaymentGroups(
-            @PathVariable("ccd-case-number") String ccdCaseNumber,
-            @RequestHeader("Authorization") String authorization,
-            @RequestHeader("ServiceAuthorization") String serviceAuthorization
-    );
-
 }

@@ -11,13 +11,13 @@ import uk.gov.hmcts.reform.authorisation.generators.AuthTokenGenerator;
 import uk.gov.hmcts.reform.payments.client.models.CasePaymentRequestDto;
 import uk.gov.hmcts.reform.payments.client.models.FeeDto;
 import uk.gov.hmcts.reform.payments.request.CardPaymentRequest;
+import uk.gov.hmcts.reform.payments.request.CardPaymentServiceRequestDTO;
 import uk.gov.hmcts.reform.payments.request.CreateServiceRequestDTO;
 import uk.gov.hmcts.reform.payments.request.CreditAccountPaymentRequest;
 import uk.gov.hmcts.reform.payments.request.PBAServiceRequestDTO;
 
 import java.math.BigDecimal;
 
-import static java.math.BigDecimal.ROUND_UNNECESSARY;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doThrow;
@@ -27,7 +27,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class PaymentsClientTest {
 
-    private static final BigDecimal TEN_2_DP = BigDecimal.TEN.setScale(2, ROUND_UNNECESSARY);
+    private static final BigDecimal TEN_2_DP = new BigDecimal("10.00");
 
     private static final String CCD_CASE_NUMBER = "UNKNOWN";
     private static final BigDecimal FEE_AMOUNT = TEN_2_DP;
@@ -64,6 +64,14 @@ class PaymentsClientTest {
             .service("service")
             .siteId("site ID")
             .build();
+
+    private static final CardPaymentServiceRequestDTO CARD_PAYMENT_SERVICE_REQUEST =
+            CardPaymentServiceRequestDTO.builder()
+                    .returnUrl("return-url")
+                    .language("English")
+                    .amount(new BigDecimal("232.00"))
+                    .currency("GBP")
+                    .build();
 
     private static final CreateServiceRequestDTO SERVICE_REQUEST = CreateServiceRequestDTO.builder()
             .callBackUrl("callbackurl")
@@ -127,6 +135,22 @@ class PaymentsClientTest {
         assertThatThrownBy(() -> client.createServiceRequest("authorisation", SERVICE_REQUEST))
                 .isInstanceOf(RuntimeException.class)
                 .hasMessage("expected exception for create payment");
+    }
+
+    @Test
+    void createGovPayCardPaymentRequest() {
+        client.createGovPayCardPaymentRequest("service-request-id",
+                "authorisation", CARD_PAYMENT_SERVICE_REQUEST);
+        verify(paymentsApi)
+                .createGovPayCardPaymentRequest("service-request-id",
+                        "authorisation", "auth token", CARD_PAYMENT_SERVICE_REQUEST);
+    }
+
+    @Test
+    void getGovPayCardPaymentStatus() {
+        client.getGovPayCardPaymentStatus("payment-reference", "authorisation");
+        verify(paymentsApi)
+                .getGovPayCardPaymentStatus("payment-reference", "authorisation", "auth token");
     }
 
     @Test

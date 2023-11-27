@@ -12,7 +12,6 @@ import uk.gov.hmcts.reform.payments.request.CreditAccountPaymentRequest;
 import uk.gov.hmcts.reform.payments.request.PBAServiceRequestDTO;
 import uk.gov.hmcts.reform.payments.response.CardPaymentServiceRequestResponse;
 import uk.gov.hmcts.reform.payments.response.PBAServiceRequestResponse;
-import uk.gov.hmcts.reform.payments.response.PaymentGroupResponse;
 import uk.gov.hmcts.reform.payments.response.PaymentServiceResponse;
 
 @Service
@@ -80,19 +79,15 @@ public class PaymentsClient {
         );
     }
 
-    public PaymentGroupResponse getCasePaymentGroups(String ccdCaseNumber, String authorisation) {
-        return paymentsApi.getCasePaymentGroups(ccdCaseNumber, authorisation, authTokenGenerator.generate());
-    }
-
-    public CardPaymentServiceRequestResponse createCardPaymentServiceRequest(
+    public CardPaymentServiceRequestResponse createGovPayCardPaymentRequest(
             String serviceReqReference,
             String authorization,
             CardPaymentServiceRequestDTO paymentRequest) {
-        return paymentsApi.createCardPaymentServiceRequest(
+        return paymentsApi.createGovPayCardPaymentRequest(
                 serviceReqReference, authorization, authTokenGenerator.generate(), paymentRequest);
     }
 
-    public PaymentDto getCardPaymentStatus(String paymentReference, String authorization) {
-        return paymentsApi.getCardPaymentStatus(paymentReference, authorization, authTokenGenerator.generate());
+    public PaymentDto getGovPayCardPaymentStatus(String paymentReference, String authorization) {
+        return paymentsApi.getGovPayCardPaymentStatus(paymentReference, authorization, authTokenGenerator.generate());
     }
 }
