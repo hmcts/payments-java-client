@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.OffsetDateTime;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -27,5 +29,5 @@ public class CardPaymentServiceRequestResponse {
     private String nextUrl;
 
     @JsonProperty("date_created")
-    private String dateCreated;
+    private OffsetDateTime dateCreated;
 }
