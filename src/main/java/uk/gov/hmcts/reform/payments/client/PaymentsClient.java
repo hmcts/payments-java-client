@@ -6,9 +6,11 @@ import org.springframework.stereotype.Service;
 import uk.gov.hmcts.reform.authorisation.generators.AuthTokenGenerator;
 import uk.gov.hmcts.reform.payments.client.models.PaymentDto;
 import uk.gov.hmcts.reform.payments.request.CardPaymentRequest;
+import uk.gov.hmcts.reform.payments.request.CardPaymentServiceRequestDTO;
 import uk.gov.hmcts.reform.payments.request.CreateServiceRequestDTO;
 import uk.gov.hmcts.reform.payments.request.CreditAccountPaymentRequest;
 import uk.gov.hmcts.reform.payments.request.PBAServiceRequestDTO;
+import uk.gov.hmcts.reform.payments.response.CardPaymentServiceRequestResponse;
 import uk.gov.hmcts.reform.payments.response.PBAServiceRequestResponse;
 import uk.gov.hmcts.reform.payments.response.PaymentServiceResponse;
 
@@ -75,5 +77,17 @@ public class PaymentsClient {
                 authTokenGenerator.generate(),
                 paymentRequest
         );
+    }
+
+    public CardPaymentServiceRequestResponse createGovPayCardPaymentRequest(
+            String serviceReqReference,
+            String authorization,
+            CardPaymentServiceRequestDTO paymentRequest) {
+        return paymentsApi.createGovPayCardPaymentRequest(
+                serviceReqReference, authorization, authTokenGenerator.generate(), paymentRequest);
+    }
+
+    public PaymentDto getGovPayCardPaymentStatus(String paymentReference, String authorization) {
+        return paymentsApi.getGovPayCardPaymentStatus(paymentReference, authorization, authTokenGenerator.generate());
     }
 }
