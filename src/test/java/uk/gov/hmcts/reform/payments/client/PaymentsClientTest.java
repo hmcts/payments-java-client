@@ -150,7 +150,7 @@ class PaymentsClientTest {
     void getGovPayCardPaymentStatus() {
         client.getGovPayCardPaymentStatus("payment-reference", "authorisation");
         verify(paymentsApi)
-                .getGovPayCardPaymentStatus("payment-reference", "authorisation", "auth token");
+                .retrieveCardPaymentStatus("payment-reference", "authorisation", "auth token");
     }
 
     @Test
