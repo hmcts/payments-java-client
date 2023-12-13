@@ -2,7 +2,7 @@
   "id" : "f4db6fd2-dea4-4a3a-80df-643b2cf1344d",
   "name" : "card-payments_rc-1701-0909-0602-0418",
   "request" : {
-    "url" : "/payments/RC-1701-0909-0602-0418",
+    "url" : "/card-payments/RC-1701-0909-0602-0418/statuses",
     "method" : "GET"
   },
   "response" : {

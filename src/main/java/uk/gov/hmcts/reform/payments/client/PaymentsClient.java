@@ -88,6 +88,6 @@ public class PaymentsClient {
     }
 
     public PaymentDto getGovPayCardPaymentStatus(String paymentReference, String authorization) {
-        return paymentsApi.getGovPayCardPaymentStatus(paymentReference, authorization, authTokenGenerator.generate());
+        return paymentsApi.retrieveCardPaymentStatus(paymentReference, authorization, authTokenGenerator.generate());
     }
 }
