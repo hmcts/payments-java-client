@@ -1,11 +1,7 @@
 ---
-#payments:
-#  api:
-#    url: 'http://localhost:${wiremock.server.port:8091}'
-
 payments:
   api:
-    url: 'http://localhost:8091'
+    url: 'http://localhost:${wiremock.server.port:8091}'
 
 idam:
   s2s-auth:
