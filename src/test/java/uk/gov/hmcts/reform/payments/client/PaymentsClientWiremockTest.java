@@ -1,12 +1,15 @@
 package uk.gov.hmcts.reform.payments.client;
 
+import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
+import com.github.tomakehurst.wiremock.junit5.WireMockExtension;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.cloud.contract.wiremock.AutoConfigureWireMock;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Service;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -34,13 +37,19 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 })
 @ExtendWith(SpringExtension.class)
 @EnableAutoConfiguration
-@AutoConfigureWireMock(port = 8091)
+@ComponentScan(basePackages = "uk.gov.hmcts.reform.payments.client")
 class PaymentsClientWiremockTest {
+
     @Autowired
     private ServiceTestSupportAuthTokenGenerator authTokenGenerator;
 
     @Autowired
     private PaymentsApi paymentsApi;
+
+    @RegisterExtension
+    public static final WireMockExtension wireMockRule = WireMockExtension.newInstance()
+            .options(WireMockConfiguration.wireMockConfig().port(8091))
+            .build();
 
     private PaymentsClient paymentsClient;
 
