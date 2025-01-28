@@ -213,7 +213,9 @@ class PaymentsClientWiremockTest {
 
     @Test
     void testRetrieveCardPaymentStatusWithCallback() {
-        PaymentDto payment = paymentsClient.getGovPayCardPaymentStatusWithCallback("d1a507bc-dccd-4411-90c8-00eb248dd9a7", "Authorisation");
+        PaymentDto payment = paymentsClient.getGovPayCardPaymentStatusWithCallback(
+                "d1a507bc-dccd-4411-90c8-00eb248dd9a7",
+                "Authorisation");
         assertNotNull(payment);
         assertAll(
                 () -> assertEquals("RC-1701-0909-0602-0418", payment.getPaymentReference()),

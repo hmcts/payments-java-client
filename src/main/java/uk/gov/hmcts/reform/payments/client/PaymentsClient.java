@@ -92,6 +92,7 @@ public class PaymentsClient {
     }
 
     public PaymentDto getGovPayCardPaymentStatusWithCallback(String internalReference, String authorization) {
-        return paymentsApi.retrieveCardPaymentStatusWithCallback(internalReference, authorization, authTokenGenerator.generate());
+        return paymentsApi.retrieveCardPaymentStatusWithCallback(internalReference, authorization,
+                authTokenGenerator.generate());
     }
 }
