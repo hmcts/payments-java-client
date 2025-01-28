@@ -212,6 +212,46 @@ class PaymentsClientWiremockTest {
     }
 
     @Test
+    void testRetrieveCardPaymentStatusWithCallback() {
+        PaymentDto payment = paymentsClient.getGovPayCardPaymentStatusWithCallback("d1a507bc-dccd-4411-90c8-00eb248dd9a7", "Authorisation");
+        assertNotNull(payment);
+        assertAll(
+                () -> assertEquals("RC-1701-0909-0602-0418", payment.getPaymentReference()),
+                () -> assertEquals(new BigDecimal("232.00"), payment.getAmount()),
+                () -> assertEquals("GBP", payment.getCurrency()),
+                () -> assertEquals("online", payment.getChannel()),
+                () -> assertEquals("card", payment.getMethod()),
+                () -> assertEquals("gov pay", payment.getExternalProvider()),
+                () -> assertEquals("Success", payment.getStatus()),
+                () -> assertEquals("d1a507bc-dccd-4411-90c8-00eb248dd9a7", payment.getReference()),
+                () -> assertEquals("lbh2ogknloh9p3b4lchngdfg63", payment.getExternalReference()),
+                () -> assertEquals("2023-1701090705688", payment.getPaymentGroupReference()),
+                () -> assertNotNull(payment.getFees()),
+                () -> assertAll(
+                        () -> assertEquals(
+                                "FEE0336",
+                                payment.getFees()[0].getCode()
+                        ),
+                        () -> assertEquals(
+                                new BigDecimal("232.00"),
+                                payment.getFees()[0].getCalculatedAmount()
+                        )
+                ),
+                () -> assertNotNull(payment.getStatusHistories()),
+                () -> assertAll(
+                        () -> assertEquals(
+                                "Initiated",
+                                payment.getStatusHistories()[0].getStatus()
+                        ),
+                        () -> assertEquals(
+                                "Success",
+                                payment.getStatusHistories()[1].getStatus()
+                        )
+                )
+        );
+    }
+
+    @Test
     void testCancelCardPayment() {
         // test passes if no exceptions are thrown
         paymentsClient.cancelCardPayment("Authorisation", "RC-7238-3245-0193-7732");
