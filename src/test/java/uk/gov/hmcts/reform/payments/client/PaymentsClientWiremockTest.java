@@ -1,12 +1,15 @@
 package uk.gov.hmcts.reform.payments.client;
 
+import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
+import com.github.tomakehurst.wiremock.junit5.WireMockExtension;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.cloud.contract.wiremock.AutoConfigureWireMock;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Service;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -34,13 +37,19 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 })
 @ExtendWith(SpringExtension.class)
 @EnableAutoConfiguration
-@AutoConfigureWireMock(port = 8091)
+@ComponentScan(basePackages = "uk.gov.hmcts.reform.payments.client")
 class PaymentsClientWiremockTest {
+
     @Autowired
     private ServiceTestSupportAuthTokenGenerator authTokenGenerator;
 
     @Autowired
     private PaymentsApi paymentsApi;
+
+    @RegisterExtension
+    public static final WireMockExtension wireMockRule = WireMockExtension.newInstance()
+            .options(WireMockConfiguration.wireMockConfig().port(8091))
+            .build();
 
     private PaymentsClient paymentsClient;
 
@@ -199,6 +208,48 @@ class PaymentsClientWiremockTest {
                         payment.getStatusHistories()[1].getStatus()
                 )
             )
+        );
+    }
+
+    @Test
+    void testRetrieveCardPaymentStatusWithCallback() {
+        PaymentDto payment = paymentsClient.getGovPayCardPaymentStatusWithCallback(
+                "d1a507bc-dccd-4411-90c8-00eb248dd9a7",
+                "Authorisation");
+        assertNotNull(payment);
+        assertAll(
+                () -> assertEquals("RC-1701-0909-0602-0418", payment.getPaymentReference()),
+                () -> assertEquals(new BigDecimal("232.00"), payment.getAmount()),
+                () -> assertEquals("GBP", payment.getCurrency()),
+                () -> assertEquals("online", payment.getChannel()),
+                () -> assertEquals("card", payment.getMethod()),
+                () -> assertEquals("gov pay", payment.getExternalProvider()),
+                () -> assertEquals("Success", payment.getStatus()),
+                () -> assertEquals("d1a507bc-dccd-4411-90c8-00eb248dd9a7", payment.getReference()),
+                () -> assertEquals("lbh2ogknloh9p3b4lchngdfg63", payment.getExternalReference()),
+                () -> assertEquals("2023-1701090705688", payment.getPaymentGroupReference()),
+                () -> assertNotNull(payment.getFees()),
+                () -> assertAll(
+                        () -> assertEquals(
+                                "FEE0336",
+                                payment.getFees()[0].getCode()
+                        ),
+                        () -> assertEquals(
+                                new BigDecimal("232.00"),
+                                payment.getFees()[0].getCalculatedAmount()
+                        )
+                ),
+                () -> assertNotNull(payment.getStatusHistories()),
+                () -> assertAll(
+                        () -> assertEquals(
+                                "Initiated",
+                                payment.getStatusHistories()[0].getStatus()
+                        ),
+                        () -> assertEquals(
+                                "Success",
+                                payment.getStatusHistories()[1].getStatus()
+                        )
+                )
         );
     }
 

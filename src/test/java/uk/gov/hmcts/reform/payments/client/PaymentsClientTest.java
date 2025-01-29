@@ -154,6 +154,13 @@ class PaymentsClientTest {
     }
 
     @Test
+    void getGovPayCardPaymentStatusWithCallback() {
+        client.getGovPayCardPaymentStatusWithCallback("internal-reference", "authorisation");
+        verify(paymentsApi)
+                .retrieveCardPaymentStatusWithCallback("internal-reference", "authorisation", "auth token");
+    }
+
+    @Test
     void createCreditAccountPaymentShouldInvokePaymentsApi() {
         client.createCreditAccountPayment("authorisation", CREDIT_ACCOUNT_PAYMENT);
 

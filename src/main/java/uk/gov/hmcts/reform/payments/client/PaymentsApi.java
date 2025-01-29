@@ -53,6 +53,13 @@ public interface PaymentsApi {
             @RequestHeader("ServiceAuthorization") String serviceAuthorization
     );
 
+    @GetMapping("/card-payments/{internalReference}/status")
+    PaymentDto retrieveCardPaymentStatusWithCallback(
+            @PathVariable("internalReference") String internalReference,
+            @RequestHeader("Authorization") String authorization,
+            @RequestHeader("ServiceAuthorization") String serviceAuthorization
+    );
+
     @PostMapping(value = "/card-payments/{paymentReference}/cancel")
     void cancelCardPayment(
             @PathVariable("paymentReference") String paymentReference,
