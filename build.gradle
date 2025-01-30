@@ -93,7 +93,7 @@ test {
 }
 
 ext {
-    lombokVersion = '1.18.30'
+    lombokVersion = '1.18.36'
     springCloudVersion = '2023.0.5'
     feignVersion = '12.5'
 }
