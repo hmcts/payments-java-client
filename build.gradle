@@ -31,7 +31,7 @@ dependencyUpdates.resolutionStrategy = {
 
 checkstyle {
     maxWarnings = 0
-    toolVersion = '10.21.2'
+    toolVersion = '10.21.3'
     getConfigDirectory().set(new File(rootDir, 'config/checkstyle'))
 }
 
