@@ -153,7 +153,7 @@ dependencies {
     implementation group: 'org.projectlombok', name: 'lombok', version: lombokVersion
     implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.17.0'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-actuator'
-    implementation (group: 'com.github.hmcts', name: 'service-auth-provider-java-client', version: '5.3.0') {
+    implementation (group: 'com.github.hmcts', name: 'service-auth-provider-java-client', version: '5.3.2') {
         exclude group: 'org.apache.httpcomponents', module: 'httpclient'
     }
 
@@ -162,7 +162,7 @@ dependencies {
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter', version: '5.12.2'
     testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test'
 
-    functionalTestImplementation group: 'com.github.hmcts', name: 'service-auth-provider-java-client', version: '5.3.0'
+    functionalTestImplementation group: 'com.github.hmcts', name: 'service-auth-provider-java-client', version: '5.3.2'
     functionalTestCompileOnly group: 'org.projectlombok', name: 'lombok', version: lombokVersion
     functionalTestAnnotationProcessor group: 'org.projectlombok', name: 'lombok', version: lombokVersion
 }
