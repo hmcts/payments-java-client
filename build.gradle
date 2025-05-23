@@ -13,8 +13,8 @@ plugins {
 // This will pick up the version number from release tag
 def buildNumber = System.getenv("RELEASE_VERSION")?.replace("refs/tags/", "") ?: "DEV-SNAPSHOT"
 
-group 'uk.gov.hmcts.reform'
-version buildNumber
+group = 'com.github.hmcts'
+version = buildNumber
 
 dependencyUpdates.resolutionStrategy = {
     componentSelection { rules ->
@@ -140,8 +140,8 @@ task functionalTest(type: Test) {
 repositories {
     mavenLocal()
     mavenCentral()
-    maven { url 'https://repo.spring.io/libs-milestone' }
-    maven { url "https://jitpack.io" }
+    maven { url = 'https://repo.spring.io/libs-milestone' }
+    maven { url = 'https://pkgs.dev.azure.com/hmcts/Artifacts/_packaging/hmcts-lib/maven/v1' }
 }
 
 dependencies {
@@ -196,9 +196,9 @@ publishing {
             from components.java
             artifact sourcesJar
             artifact javadocJar
-            groupId project.group
-            artifactId 'payments-client'
-            version project.version
+            groupId = project.group
+            artifactId = 'payments-java-client'
+            version = project.version
 
             pom.withXml {
                 def root = asNode()
@@ -206,6 +206,16 @@ publishing {
                 root.appendNode('name', 'Payments client')
                 root.appendNode('url', gitRepo)
                 root.children().last() + pomConfig
+            }
+        }
+    }
+    repositories {
+        maven {
+            name = "AzureArtifacts"
+            url = uri("https://pkgs.dev.azure.com/hmcts/Artifacts/_packaging/hmcts-lib/maven/v1")
+            credentials {
+                username = System.getenv("AZURE_DEVOPS_ARTIFACT_USERNAME")
+                password = System.getenv("AZURE_DEVOPS_ARTIFACT_TOKEN")
             }
         }
     }
