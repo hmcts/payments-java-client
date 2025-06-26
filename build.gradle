@@ -99,7 +99,7 @@ ext {
 }
 
 def versions = [
-        junitJupiter     : '5.13.1'
+        junitJupiter     : '5.13.2'
 ]
 
 dependencyManagement {
