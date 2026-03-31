@@ -3,11 +3,9 @@ package uk.gov.hmcts.reform.payments.client.config;
 import feign.Response;
 import feign.codec.ErrorDecoder;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.io.IOUtils;
 import uk.gov.hmcts.reform.payments.client.InvalidPaymentRequestException;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
 @Slf4j
@@ -36,8 +34,7 @@ public class FeignErrorDecoder implements ErrorDecoder {
 
     private byte[] getBytes(Response response) {
         try {
-            InputStream inputStream = response.body().asInputStream();
-            return IOUtils.toByteArray(inputStream);
+            return response.body().asInputStream().readAllBytes();
         } catch (IOException e) {
             log.error("Failed to read the response body with error: ", e);
         }
