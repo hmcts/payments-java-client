@@ -95,7 +95,7 @@ test {
 ext {
     lombokVersion = '1.18.46'
     springCloudVersion = '2025.0.1'
-    feignVersion = '13.11'
+    feignVersion = '13.12'
 }
 
 def versions = [
